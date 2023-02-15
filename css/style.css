@@ -1,13 +1,8 @@
 @charset "utf-8";
-html { font-family:"맑은 고딕", "돋움", sans-serif;
-    font-size:16px; font-weight:normal; line-height:1.5; background-color:#fff; color:#4d5058;
-    /* 글꼴 크기 조정을 방지 */
-    -webkit-text-size-adjust:100%;
-    /* 폰트를 부드럽게 */
-    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    /* 웹킷 마음대로 눌림 하이라이트 막음 */
-    -webkit-tap-highlight-color:transparent;
-} 
+@import url("font.css");
+html, body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, textarea, select, blockquote, span, * {
+	font-family: 'Noto Sans KR', sans-serif;
+}
 body { width:100vw; height:100vh; margin:0; display:grid; grid-template-rows: 100px auto 50px; } 
 header,section,article,aside,footer,main,a,button,input,textarea,img,nav,ul,ol,li,p,h1,h2,h3,h4,h5,h6,div,span { margin:0; padding:0; font-size:inherit; }
 a:active, a:hover { outline:none; } 
@@ -15,6 +10,9 @@ a { color:#1e87f0; text-decoration:none; cursor:pointer; }
 a:hover { color:#0f6ecd; text-decoration:underline; }
 b, strong { font-weight:bolder; }
 
-header { background-color: #000000; }
-footer { background-color: #00ffff; }
+header { }
+header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight: bold; }
+main select { width:130px; }
+footer { }
 .w80 { width:80px }
+.w100 { width:100px }
