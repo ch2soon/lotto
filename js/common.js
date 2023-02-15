@@ -1,21 +1,22 @@
-const getLottoNumber = false;
+const getLottoFlag = false;
 let lottoList = [];
-if(getLottoNumber) {
-    const url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=100";
-    const getData = (url) => {
-        return fetch(url);
-    };
-    getData(url).then(data => data.json()).then(result => console.log(result));
-    // $.ajax({
-    //     type : "get",
-    //     url : "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=100",
-    //     success : function(res){
-    //         console.log(res);
-    //     },
-    //     error : function(XMLHttpRequest, textStatus, errorThrown) {
-    //         console.log("error : " + textStatus)
-    //     }
-    // });
+if(getLottoFlag) {
+    let drwNo = 1000;
+    const url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo="+drwNo;
+    const getData = (url) => fetch(url);
+    getData(url).then(resp => {
+        const respJson = resp.json();
+        // console.log("resp", resp, respJson);
+        return respJson;
+    }).then(data => {
+        if(data.returnValue == "success") {
+            console.log("data", data);
+        } else {
+            console.log("data error");
+        }
+    }).catch(excResp => {
+        console.log("catch", excResp);
+    });
 }
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector(".extraction_btn").addEventListener('click', function() {
