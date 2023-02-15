@@ -15,6 +15,7 @@ header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight
 footer { }
 
 .ext_operation_are { text-align: right; }
+.ext_operation_are > .negative_manual { display: inline-block !important; width:30% !important; }
 .ext_operation_are > select { display: inline-block !important; width:150px !important; }
 .ext_operation_are > button { vertical-align: top !important; }
 
