@@ -1,6 +1,4 @@
 @charset "utf-8";
-*, *::before, *::after { box-sizing:border-box; }
-::selection, ::-moz-selection { background:#39f; color:#fff;text-shadow:none; } 
 html { font-family:"맑은 고딕", "돋움", sans-serif;
     font-size:16px; font-weight:normal; line-height:1.5; background-color:#fff; color:#4d5058;
     /* 글꼴 크기 조정을 방지 */
@@ -10,9 +8,13 @@ html { font-family:"맑은 고딕", "돋움", sans-serif;
     /* 웹킷 마음대로 눌림 하이라이트 막음 */
     -webkit-tap-highlight-color:transparent;
 } 
-body { margin:0; } 
+body { width:100vw; height:100vh; margin:0; display:grid; grid-template-rows: 100px auto 50px; } 
 header,section,article,aside,footer,main,a,button,input,textarea,img,nav,ul,ol,li,p,h1,h2,h3,h4,h5,h6,div,span { margin:0; padding:0; font-size:inherit; }
 a:active, a:hover { outline:none; } 
 a { color:#1e87f0; text-decoration:none; cursor:pointer; } 
 a:hover { color:#0f6ecd; text-decoration:underline; }
 b, strong { font-weight:bolder; }
+
+header { background-color: #000000; }
+footer { background-color: #00ffff; }
+.w80 { width:80px }
