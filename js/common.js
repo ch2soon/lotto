@@ -1,4 +1,5 @@
 const getLottoFlag = false;
+let NegativeNumber = [];
 let lottoList = [];
 if(getLottoFlag) {
     let drwNo = 1000;
@@ -18,24 +19,27 @@ if(getLottoFlag) {
         console.log("catch", excResp);
     });
 }
+
 document.addEventListener('DOMContentLoaded', () => {
+    negativeNumberExt();
     document.querySelector(".extraction_btn").addEventListener('click', function() {
         lottoList = [];
         lottoExt();
     });
 })
+// 제외수 추출 로직 작성
+const negativeNumberExt = () => {
+    // NegativeNumber.push(1,2);          // 추출된 제외수 배열로 등록
+}
 const lottoExt = () => {
     let cnt = parseInt(document.querySelector(".extraction_cnt").value);
     for(z=0; z<cnt; z++) {
         let lotto = [];
-        for(let i=0; i<6; i++) {
-            let num = Math.floor(Math.random() * 44) + 1;
-            for(let j of lotto) {
-                while(num == lotto[j]) {
-                    num = Math.floor(Math.random() * 44) + 1;
-                }
+        while(lotto.length < 6) {
+            let num = Math.floor(Math.random() * 45) + 1;
+            if(lotto.indexOf(num) < 0 && NegativeNumber.indexOf(num) < 0) {
+                lotto.push(num);
             }
-            lotto.push(num);
         }
         lotto.sort(function(a,b) {
             return a - b;
@@ -45,7 +49,7 @@ const lottoExt = () => {
     let lottoStr = '';
     if(lottoList.length > 0) {
         lottoStr += '<ul>';
-        lottoList.forEach((data, index) => {
+        lottoList.forEach((data) => {
             lottoStr += '<li>'+data+'</li>';
         });
         lottoStr += '</ul>';
