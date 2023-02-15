@@ -20,14 +20,9 @@ if(getLottoFlag) {
         console.log("catch", excResp);
     });
 }
-
 document.addEventListener('DOMContentLoaded', () => {
-    negativeNumberExt();
-
-
-    NegativeManualNumberExt();
-
-
+    negativeNumberExt();            // 추출 제외수 초기화
+    NegativeManualNumberExt();      // 메뉴얼 제외수 초기화
     document.querySelector(".negative_manual").addEventListener('keyup', function() {
         NegativeManualNumberExt();
     });
@@ -35,8 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lottoList = [];
         lottoExt();
     });
-})
-// 제외수 연산 추출 로직 작성
+});
 const negativeNumberExt = () => {
     // NegativeNumber.push(1,2);          // 추출된 제외수 배열로 등록
 }
@@ -45,9 +39,14 @@ const NegativeManualNumberExt = () => {
     let tnn = document.querySelector(".negative_manual").value.trim();
     if(tnn !== "") {
         let nn = tnn.split(",");
-        nn.forEach((data) => {
-            if(data.trim() !== "") NegativeManualNumber.push(parseInt(data));
-        });
+        if(nn.length > 10) {
+            alert("제외수는 10건까지 등록할 수 있습니다.");
+            document.querySelector(".negative_manual").value = document.querySelector(".negative_manual").value.slice(0, -1);
+        } else {
+            nn.forEach((data) => {
+                if(data.trim() !== "" && parseInt(data) <= 45) NegativeManualNumber.push(parseInt(data));
+            });
+        }
     }
 }
 const lottoExt = () => {
