@@ -10,12 +10,24 @@ a { color:#1e87f0; text-decoration:none; cursor:pointer; }
 a:hover { color:#0f6ecd; text-decoration:underline; }
 b, strong { font-weight:bolder; }
 
+ul, ol { list-style:none; margin:0px; padding:0px; max-width:300px; width:100%; }
+ul li, ol li { padding:5px 0px 5px 5px; margin-bottom:5px; border-bottom:1px solid #efefef; /*font-size:12px;*/ }
+ul li:before, ol li:before { content:""; display:inline-block; vertical-align:middle; padding:0px 5px 6px 0px; }
+
 header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight: 400; }
 
-.ext_operation_are { text-align: right; }
+.sub_title { position:fixed; margin:8px 0 0 10px; }
+.ext_operation_are { text-align:right; }
 .ext_operation_are > .negative_manual { display: inline-block !important; width:40% !important; }
 .ext_operation_are > select { display: inline-block !important; width:150px !important; }
 .ext_operation_are > button { vertical-align: top !important; }
+
+.extraction_area { margin-top:50px; }
+.extraction_area > ul { margin:0 auto; }
+.extraction_area > ul > li > span { display:inline-block; width:40px; text-align:center; }
+.extraction_area > ul > li .dec { color:#ca520c; }
+.extraction_area > ul > li .com { color:#9d3eaa; }
+.extraction_area > ul > li .sos { color:#439cbe; }
 
 .w80 { width:80px }
 .w100 { width:100px }

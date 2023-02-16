@@ -1,3 +1,6 @@
+const decimalArr = [2,3,5,7,11,13,17,19,23,29,31,37,41,43];     // 4개초과 출현 안함
+const compositeNumberArr = [1,4,8,10,14,16,20,22,25,26,28,32,34,35,38,40,44];       // 4개초과 출현 안함
+const sosabhap = [3,6,9,12,15,18,21,24,27,30,33,36,39,42,45];       // 1~3개 포함
 let lottoArr = [];
 let lottoList = [];
 let NegativeNumber = [];
@@ -33,7 +36,7 @@ const NegativeManualNumberExt = () => {
             negativeManualRollback();
         } else {
             nn.forEach((data) => {
-                if(data.trim() !== '' && parseInt(data) <= 45) NegativeManualNumber.push(parseInt(data));
+                (data.trim() !== '' && parseInt(data) <= 45 ? NegativeManualNumber.push(parseInt(data)) : null);
             });
         }
     }
@@ -49,9 +52,7 @@ const lottoExt = () => {
         // console.log(NegativeNumber);
         while(lotto.length < 6) {
             let num = Math.floor(Math.random() * 45) + 1;
-            if(lotto.indexOf(num) < 0 && NegativeNumber.indexOf(num) < 0 && NegativeManualNumber.indexOf(num) < 0) {
-                lotto.push(num);
-            }
+            (lotto.indexOf(num) < 0 && NegativeNumber.indexOf(num) < 0 && NegativeManualNumber.indexOf(num) < 0 ? lotto.push(num) : null);
         }
         lotto.sort(function(a,b) {
             return a - b;
@@ -61,7 +62,19 @@ const lottoExt = () => {
     let lottoStr = '';
     if(lottoList.length > 0) {
         lottoStr += '<ul>';
-        lottoList.forEach((data) => {
+        lottoList.forEach((res) => {
+            console.log(res);
+            let data = '';
+            res.forEach((tnum, tidx) => {                
+                let suType = '';
+                if(decimalArr.indexOf(tnum) > -1) suType = 'dec';
+                if(compositeNumberArr.indexOf(tnum) > -1) suType = 'com';
+                if(sosabhap.indexOf(tnum) > -1) suType = 'sos';
+                // data += (tidx > 0 ? ',' : '');
+                data += '<span';
+                if(suType.trim() != '') data += ' class="'+suType+'"';
+                data += '>'+tnum+'</span>';
+            });
             lottoStr += '<li>'+data+'</li>';
         });
         lottoStr += '</ul>';

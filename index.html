@@ -5,17 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/bootstrap-icons.css" />
     <link href="./css/style.css" rel="stylesheet" />
     <script src="./js/function.js"></script>
     <script src="./js/common.js"></script>
-    <title>Study Lotto</title>
+    <title>ES6 Study</title>
   </head>
   <body>
     <header>
-      <h1>로또번호 추출기</h1>
+      <h1>ES6 Study</h1>
     </header>
     <main>
       <div class="container">
+        <div class="sub_title">
+          <div><i class="bi bi-building-fill"></i> <span>로또 추출기</span></div>
+        </div>
         <div class="ext_operation_are">
           <input type="text" class="form-control negative_manual" placeholder="제외수가 있으면 입력하세요.(숫자와 콤마만 등록-콤마구분)" />
           <select class="form-select extraction_cnt">
@@ -25,6 +29,7 @@
           </select>
           <button type="button" class="btn btn-outline-primary w100 extraction_btn">Extraction</button>
         </div>
+        <hr />
         <section>
           <div class="extraction_area"></div>
         </section>
