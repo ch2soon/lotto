@@ -1,33 +1,20 @@
-const getLottoFlag = false;
+let lottoArr = [];
+let lottoList = [];
 let NegativeNumber = [];
 let NegativeManualNumber = [];
-let lottoList = [];
-console.log(new Date().format("yyyy-MM-dd E"));
-if(getLottoFlag) {
-    let drwNo = 1000;
-    const url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo="+drwNo;
-    const getData = (url) => fetch(url);
-    getData(url).then(resp => {
-        const respJson = resp.json();
-        // console.log("resp", resp, respJson);
-        return respJson;
-    }).then(data => {
-        if(data.returnValue == "success") {
-            console.log("data", data);
-        } else {
-            console.log("data error");
-        }
-    }).catch(excResp => {
-        console.log("catch", excResp);
-    });
-}
 document.addEventListener('DOMContentLoaded', () => {
+    const getLottoFlag = false;             // Lotto API 실행여부
+    readTextFile("/data/lottoList.txt");    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
+    if(getLottoFlag) {
+        let drwNo = 4;
+        getAPILottoNumber(drwNo);
+    }
     negativeNumberExt();            // 추출 제외수 초기화
     NegativeManualNumberExt();      // 메뉴얼 제외수 초기화
-    document.querySelector(".negative_manual").addEventListener('keyup', function() {
+    document.querySelector('.negative_manual').addEventListener('keyup', function() {
         NegativeManualNumberExt();
     });
-    document.querySelector(".extraction_btn").addEventListener('click', function() {
+    document.querySelector('.extraction_btn').addEventListener('click', function() {
         lottoList = [];
         lottoExt();
     });
@@ -37,23 +24,25 @@ const negativeNumberExt = () => {
 }
 const NegativeManualNumberExt = () => {    
     NegativeManualNumber = [];
-    let tnn = document.querySelector(".negative_manual").value.trim();
-    console.log(isCommaNumber(tnn));
-    if(!isCommaNumber(tnn)) document.querySelector(".negative_manual").value = document.querySelector(".negative_manual").value.slice(0, -1);
-    if(tnn !== "") {
-        let nn = tnn.split(",");
+    let tnn = document.querySelector('.negative_manual').value.trim();
+    if(!isCommaNumber(tnn)) negativeManualRollback();
+    if(tnn !== '') {
+        let nn = tnn.split(',');
         if(nn.length > 10) {
-            alert("제외수는 10건까지 등록할 수 있습니다.");
-            document.querySelector(".negative_manual").value = document.querySelector(".negative_manual").value.slice(0, -1);
+            alert('제외수는 10건까지 등록할 수 있습니다.');
+            negativeManualRollback();
         } else {
             nn.forEach((data) => {
-                if(data.trim() !== "" && parseInt(data) <= 45) NegativeManualNumber.push(parseInt(data));
+                if(data.trim() !== '' && parseInt(data) <= 45) NegativeManualNumber.push(parseInt(data));
             });
         }
     }
 }
+const negativeManualRollback = () => {
+    return document.querySelector('.negative_manual').value = document.querySelector('.negative_manual').value.slice(0, -1);
+}
 const lottoExt = () => {
-    let cnt = parseInt(document.querySelector(".extraction_cnt").value);
+    let cnt = parseInt(document.querySelector('.extraction_cnt').value);
     for(z=0; z<cnt; z++) {
         let lotto = [];
         // console.log(NegativeManualNumber);
@@ -77,5 +66,5 @@ const lottoExt = () => {
         });
         lottoStr += '</ul>';
     }
-    document.querySelector(".extraction_area").innerHTML = lottoStr;
+    document.querySelector('.extraction_area').innerHTML = lottoStr;
 }

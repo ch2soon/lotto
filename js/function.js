@@ -67,3 +67,48 @@ Date.prototype.format = function(f) {
 String.prototype.string = function(len){let s = '', i = 0; while (i++ < len) { s += this; } return s;};
 String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
 Number.prototype.zf = function(len){return this.toString().zf(len);};
+// 로컬 파일 읽어오기
+const readTextFile = (file) => {
+    let rawFile = new XMLHttpRequest();
+    rawFile.open('GET', file, false);
+    rawFile.onreadystatechange = function () {
+        if(rawFile.readyState === 4) {
+            if(rawFile.status === 200 || rawFile.status == 0) {
+                let allText = rawFile.responseText;
+                let preantArr = allText.split('\n');
+                preantArr.forEach((prtData) => {
+                    let childArr = prtData.split('|');
+                    let lottoObj = {
+                        'no1':childArr[0],
+                        'no2':childArr[1],
+                        'no3':childArr[2],
+                        'no4':childArr[3],
+                        'no5':childArr[4],
+                        'no6':childArr[5],
+                        'date':childArr[6],
+                        'bonusNo':childArr[7],
+                        'round':childArr[8].replace('\r','')
+                    }
+                    lottoArr.push(lottoObj);
+                });
+            }
+        }
+    }
+    rawFile.send(null);
+}
+// API로 로또번호 가져오기 - drwNo:회차
+const getAPILottoNumber = (drwNo) => {
+    const url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='+drwNo;
+    const getData = (url) => fetch(url);
+    getData(url).then(resp => {
+        const respJson = resp.json();
+        // console.log('resp', resp, respJson);
+        return respJson;
+    }).then(data => {
+        if(data.returnValue == 'success') {
+            console.log('data', data);
+        } else console.log('data error');
+    }).catch(excResp => {
+        console.log('catch', excResp);
+    });
+}
