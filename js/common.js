@@ -2,6 +2,7 @@ const getLottoFlag = false;
 let NegativeNumber = [];
 let NegativeManualNumber = [];
 let lottoList = [];
+console.log(new Date().format("yyyy-MM-dd E"));
 if(getLottoFlag) {
     let drwNo = 1000;
     const url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo="+drwNo;
@@ -37,6 +38,8 @@ const negativeNumberExt = () => {
 const NegativeManualNumberExt = () => {    
     NegativeManualNumber = [];
     let tnn = document.querySelector(".negative_manual").value.trim();
+    console.log(isCommaNumber(tnn));
+    if(!isCommaNumber(tnn)) document.querySelector(".negative_manual").value = document.querySelector(".negative_manual").value.slice(0, -1);
     if(tnn !== "") {
         let nn = tnn.split(",");
         if(nn.length > 10) {
