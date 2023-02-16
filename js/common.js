@@ -7,7 +7,8 @@ let NegativeNumber = [];
 let NegativeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
     const getLottoFlag = false;             // Lotto API 실행여부
-    readTextFile("/data/lottoList.txt");    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
+    const isGetLocalLotto = false;          // data/저장된 로또번호 읽어오기 여부
+    (isGetLocalLotto) ? readTextFile("/data/lottoList.txt") : null;    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
     if(getLottoFlag) {
         let drwNo = 4;
         getAPILottoNumber(drwNo);
@@ -28,7 +29,7 @@ const negativeNumberExt = () => {
 const NegativeManualNumberExt = () => {    
     NegativeManualNumber = [];
     let tnn = document.querySelector('.negative_manual').value.trim();
-    if(!isCommaNumber(tnn)) negativeManualRollback();
+    (!isCommaNumber(tnn)) ? negativeManualRollback() : null;
     if(tnn !== '') {
         let nn = tnn.split(',');
         if(nn.length > 10) {
@@ -36,7 +37,7 @@ const NegativeManualNumberExt = () => {
             negativeManualRollback();
         } else {
             nn.forEach((data) => {
-                (data.trim() !== '' && parseInt(data) <= 45 ? NegativeManualNumber.push(parseInt(data)) : null);
+                (data.trim() !== '' && parseInt(data) <= 45) ? NegativeManualNumber.push(parseInt(data)) : null;
             });
         }
     }
@@ -52,7 +53,7 @@ const lottoExt = () => {
         // console.log(NegativeNumber);
         while(lotto.length < 6) {
             let num = Math.floor(Math.random() * 45) + 1;
-            (lotto.indexOf(num) < 0 && NegativeNumber.indexOf(num) < 0 && NegativeManualNumber.indexOf(num) < 0 ? lotto.push(num) : null);
+            (lotto.indexOf(num) < 0 && NegativeNumber.indexOf(num) < 0 && NegativeManualNumber.indexOf(num) < 0) ? lotto.push(num) : null;
         }
         lotto.sort(function(a,b) {
             return a - b;
@@ -63,16 +64,15 @@ const lottoExt = () => {
     if(lottoList.length > 0) {
         lottoStr += '<ul>';
         lottoList.forEach((res) => {
-            console.log(res);
             let data = '';
             res.forEach((tnum, tidx) => {                
                 let suType = '';
-                if(decimalArr.indexOf(tnum) > -1) suType = 'dec';
-                if(compositeNumberArr.indexOf(tnum) > -1) suType = 'com';
-                if(sosabhap.indexOf(tnum) > -1) suType = 'sos';
+                (decimalArr.indexOf(tnum) > -1) ? suType = 'dec' : null;
+                (compositeNumberArr.indexOf(tnum) > -1) ? suType = 'com' : null;
+                (sosabhap.indexOf(tnum) > -1) ? suType = 'sos' : null;
                 // data += (tidx > 0 ? ',' : '');
                 data += '<span';
-                if(suType.trim() != '') data += ' class="'+suType+'"';
+                (suType.trim() != '') ? data += ' class="'+suType+'"' : null;
                 data += '>'+tnum+'</span>';
             });
             lottoStr += '<li>'+data+'</li>';
