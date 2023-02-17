@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     const getApiModal = document.getElementById('getApiModal');
     getApiModal.addEventListener('show.bs.modal', () => {
+        document.querySelector('.drwNo').value = '';
         const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
         mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>';
         modalBody.innerHTML = mbStr;
