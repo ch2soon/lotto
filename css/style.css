@@ -16,10 +16,10 @@ ul li:before, ol li:before { content:""; display:inline-block; vertical-align:mi
 
 header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight: 400; }
 
-.sub_title { position:fixed; margin:8px 0 0 10px; }
+.sub_title { position:absolute; margin:8px 0 0 10px; }
 .ext_operation_are { text-align:right; }
-.ext_operation_are > .negative_manual { display: inline-block !important; width:40% !important; }
-.ext_operation_are > select { display: inline-block !important; width:150px !important; }
+.ext_operation_are > .negative_manual { display: inline-block !important; width:45% !important; }
+.ext_operation_are > select { display: inline-block !important; width:130px !important; }
 .ext_operation_are > button { vertical-align: top !important; }
 
 .extraction_area { margin-top:50px; }
@@ -29,5 +29,7 @@ header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight
 .extraction_area > ul > li .com { color:#9d3eaa; }
 .extraction_area > ul > li .sos { color:#439cbe; }
 
+#getApiModal > .modal-dialog > .modal-content > .modal-header > .modal-title > .drwNo { display:inline-block; width:80px; padding:0.275rem 0.75rem; margin:0 5px 0 10px; }
+#getApiModal > .modal-dialog > .modal-content > .modal-header > .modal-title > button { margin-bottom: 5px; }
 .w80 { width:80px }
 .w100 { width:100px }

@@ -6,21 +6,31 @@ let lottoList = [];
 let NegativeNumber = [];
 let NegativeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
-    const getLottoFlag = false;             // Lotto API 실행여부
     const isGetLocalLotto = false;          // data/저장된 로또번호 읽어오기 여부
     (isGetLocalLotto) ? readTextFile("/data/lottoList.txt") : null;    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
-    if(getLottoFlag) {
-        let drwNo = 4;
-        getAPILottoNumber(drwNo);
-    }
     negativeNumberExt();            // 추출 제외수 초기화
     NegativeManualNumberExt();      // 메뉴얼 제외수 초기화
-    document.querySelector('.negative_manual').addEventListener('keyup', function() {
+    document.querySelector('.negative_manual').addEventListener('keyup', () => {
         NegativeManualNumberExt();
     });
-    document.querySelector('.extraction_btn').addEventListener('click', function() {
+    document.querySelector('.extraction_btn').addEventListener('click', () => {
         lottoList = [];
         lottoExt();
+    });
+    const getApiModal = document.getElementById('getApiModal');
+    getApiModal.addEventListener('show.bs.modal', () => {
+        const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
+        mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>';
+        modalBody.innerHTML = mbStr;
+    });
+    const drwNo = document.querySelector('.drwNo');
+    drwNo.addEventListener('keyup', () => {
+        let tnn = drwNo.value.trim();
+        (!isNumber(tnn)) ? drwNo.value = drwNo.value.slice(0, -1) : null;
+    });
+    document.querySelector('.getNumber').addEventListener('click', () => {
+        let drwNo = document.querySelector('.drwNo').value.trim();
+        (drwNo === '') ? alert('확인 할 회차번호를 입력해 주세요.') : getAPILottoNumber(drwNo);
     });
 });
 const negativeNumberExt = () => {

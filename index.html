@@ -7,8 +7,6 @@
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./css/bootstrap-icons.css" />
     <link href="./css/style.css" rel="stylesheet" />
-    <script src="./js/function.js"></script>
-    <script src="./js/common.js"></script>
     <title>ES6 Study</title>
   </head>
   <body>
@@ -35,7 +33,50 @@
         </section>
       </div>
     </main>
-    <footer></footer>
+    <footer>
+      <div class="container d-md-flex justify-content-md-end">
+        <button type="button" class="btn btn-secondary btn-sm getAPILottoNumber" data-bs-toggle="modal" data-bs-target="#getApiModal">
+          회차별 당첨번호 확인
+        </button>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="getApiModal" tabindex="-1" role="dialog" aria-labelledby="getApiModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">
+              회차별 당점번호 확인
+              <input type="text" class="form-control drwNo" />
+              <button type="button" class="btn btn-dark btn-sm getNumber">전송</button>
+            </h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <table class="table table-bordered">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">회차</th>
+                  <th scope="col">당첨번호</th>
+                  <th scope="col">보너스번호</th>
+                  <th scope="col">추첨일</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/function.js"></script>
+    <script src="./js/common.js"></script>
   </body>
 </html>

@@ -98,17 +98,35 @@ const readTextFile = (file) => {
 }
 // API로 로또번호 가져오기 - drwNo:회차
 const getAPILottoNumber = (drwNo) => {
-    const url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='+drwNo;
-    const getData = (url) => fetch(url);
-    getData(url).then(resp => {
-        const respJson = resp.json();
-        // console.log('resp', resp, respJson);
-        return respJson;
-    }).then(data => {
-        if(data.returnValue == 'success') {
-            console.log('data', data);
-        } else console.log('data error');
-    }).catch(excResp => {
-        console.log('catch', excResp);
-    });
+    try {
+        const url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='+drwNo;
+        const getData = (url) => fetch(url);
+        getData(url).then(resp => {
+            const respJson = resp.json();
+            // console.log('resp', resp, respJson);
+            return respJson;
+        }).then(data => {
+            if(data.returnValue == 'success') {
+                let str = '';
+                str += '<tr>';
+                str += '<td>'+data.drwNo+'</td>';
+                str += '<td>';
+                str += data.drwtNo1+','+data.drwtNo2+','+data.drwtNo3+','+data.drwtNo4+','+data.drwtNo5+','+data.drwtNo6;
+                str += '</td>';
+                str += '<td>'+data.bnusNo+'</td>';
+                str += '<td>'+data.drwNoDate+'</td>';
+                str += '</tr>';
+                const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
+                modalBody.innerHTML = str;
+            } else {   
+                alert('정상적인 회차번호가 아닙니다.\n다시 입력해 주세요.');
+                document.querySelector('.drwNo').value = '';
+                document.querySelector('.drwNo').focus();
+            }
+        }).catch(excResp => {
+            console.log('catch', excResp);
+        });
+    } catch {
+        console.log('error');
+    }
 }
