@@ -3,10 +3,10 @@
 html, body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, textarea, select, blockquote, span, * {
 	font-family: 'Noto Sans KR', sans-serif;
 }
-body { width:100vw; height:100vh; margin:0; display:grid; grid-template-rows: 100px auto 50px; } 
+body { width:98vw; height:100vh; margin:0 auto; display:grid; grid-template-rows: 100px auto 50px; } 
 header,section,article,aside,footer,main,a,button,input,textarea,img,nav,ul,ol,li,p,h1,h2,h3,h4,h5,h6,div,span { margin:0; padding:0; font-size:inherit; }
 a:active, a:hover { outline:none; } 
-a { color:#1e87f0; text-decoration:none; cursor:pointer; } 
+a { color:#1e87f0; text-decoration:none; cursor:pointer; }
 a:hover { color:#0f6ecd; text-decoration:underline; }
 b, strong { font-weight:bolder; }
 
