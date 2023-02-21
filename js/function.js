@@ -122,11 +122,12 @@ const readTextFile = (file) => {
 const getAPILottoNumber = (drwNo) => {
     try {
         const url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='+drwNo;
-        const getData = (url) => fetch(url);
+        const headers = new Headers({ /*'Content-Type': 'text/xml'*/ });
+        const getData = (url) => fetch(url, { headers });
         getData(url).then(resp => {
-            const respJson = resp.json();
+            if(resp.ok) return resp.json();
             // console.log('resp', resp, respJson);
-            return respJson;
+            throw new Error('Network response was not ok.');
         }).then(data => {
             if(data.returnValue == 'success') {
                 let str = '';
