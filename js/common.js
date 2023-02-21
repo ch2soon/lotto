@@ -6,7 +6,7 @@ let lottoList = [];
 let NegativeNumber = [];
 let NegativeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
-    const isGetLocalLotto = false;          // data/저장된 로또번호 읽어오기 여부
+    const isGetLocalLotto = true;          // data/저장된 로또번호 읽어오기 여부
     (isGetLocalLotto) ? readTextFile("/data/lottoList.txt") : null;    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
     negativeNumberExt();            // 추출 제외수 초기화
     NegativeManualNumberExt();      // 메뉴얼 제외수 초기화
@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
         modalBody.innerHTML = mbStr;
     });
     const drwNo = document.querySelector('.drwNo');
-    drwNo.addEventListener('keyup', () => {
+    drwNo.addEventListener('keyup', (e) => {
+        if(e.keyCode === 13) document.querySelector('.getNumber').click();
         let tnn = drwNo.value.trim();
         (!isNumber(tnn)) ? drwNo.value = drwNo.value.slice(0, -1) : null;
     });

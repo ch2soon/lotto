@@ -29,14 +29,32 @@
         </div>
         <hr />
         <section>
-          <div class="extraction_area"></div>
+          <div class="section_area">
+            <div class="extraction_area">
+              <p>번호 추출시 여기에 표시됩니다.</p>
+            </div>
+            <div class="before_number_area">
+              <p>※ 최근 10회 당첨번호</p>
+              <table class="table table-bordered">
+                <thead class="table-dark">
+                  <tr>
+                    <th>회차</th>
+                    <th>당첨번호</th>
+                    <th>보너스번호</th>
+                    <th>추첨일</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
         </section>
       </div>
     </main>
     <footer>
       <div class="container d-md-flex justify-content-md-end">
         <button type="button" class="btn btn-secondary btn-sm getAPILottoNumber" data-bs-toggle="modal" data-bs-target="#getApiModal">
-          회차별 당첨번호 확인
+          당첨번호 가져오기
         </button>
       </div>
     </footer>
@@ -47,7 +65,7 @@
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title">
-              회차별 당점번호 확인
+              회차별 당점번호 가져오기 API
               <input type="text" class="form-control drwNo" />
               <button type="button" class="btn btn-dark btn-sm getNumber">전송</button>
             </h4>

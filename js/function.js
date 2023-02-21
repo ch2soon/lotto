@@ -69,6 +69,7 @@ String.prototype.zf = function(len){return "0".string(len - this.length) + this;
 Number.prototype.zf = function(len){return this.toString().zf(len);};
 // 로컬 파일 읽어오기
 const readTextFile = (file) => {
+    const count = 10;        // 추출할 갯수
     let rawFile = new XMLHttpRequest();
     rawFile.open('GET', file, false);
     rawFile.onreadystatechange = function () {
@@ -78,19 +79,40 @@ const readTextFile = (file) => {
                 let preantArr = allText.split('\n');
                 preantArr.forEach((prtData) => {
                     let childArr = prtData.split('|');
-                    let lottoObj = {
-                        'no1':childArr[0],
-                        'no2':childArr[1],
-                        'no3':childArr[2],
-                        'no4':childArr[3],
-                        'no5':childArr[4],
-                        'no6':childArr[5],
-                        'date':childArr[6],
-                        'bonusNo':childArr[7],
-                        'round':childArr[8].replace('\r','')
+                    if(childArr[0].trim() !== "") {
+                        let lottoObj = {
+                            'no1':childArr[0],
+                            'no2':childArr[1],
+                            'no3':childArr[2],
+                            'no4':childArr[3],
+                            'no5':childArr[4],
+                            'no6':childArr[5],
+                            'date':childArr[6],
+                            'bonusNo':childArr[7],
+                            'round':childArr[8].replace('\r','')
+                        }
+                        lottoArr.push(lottoObj);
                     }
-                    lottoArr.push(lottoObj);
                 });
+                lottoArr.sort((a, b) => parseInt(b.round) - parseInt(a.round));     // 내림차순 정렬
+                let i=0;
+                let str = '';
+                lottoArr.forEach((data) => {
+                    if(i >= count) return false;
+                    else {
+                        str += '<tr>';
+                        str += '<td class="tCenter">'+data.round+'</td>';
+                        str += '<td class="tCenter">';
+                        str += data.no1+','+data.no2+','+data.no3+','+data.no4+','+data.no5+','+data.no6;
+                        str += '</td>';
+                        str += '<td class="tCenter">'+data.bonusNo+'</td>';
+                        str += '<td class="tCenter">'+data.date+'</td>';
+                        str += '</tr>';
+                    }
+                    i++;
+                });
+                const extractionBody = document.querySelectorAll('.before_number_area tbody')[0];
+                extractionBody.innerHTML = str;
             }
         }
     }

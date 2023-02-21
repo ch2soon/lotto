@@ -11,7 +11,7 @@ a:hover { color:#0f6ecd; text-decoration:underline; }
 b, strong { font-weight:bolder; }
 
 ul, ol { list-style:none; margin:0px; padding:0px; max-width:300px; width:100%; }
-ul li, ol li { padding:5px 0px 5px 5px; margin-bottom:5px; border-bottom:1px solid #efefef; /*font-size:12px;*/ }
+ul li, ol li { margin-bottom:5px; border-bottom:1px solid #efefef; /*font-size:12px;*/ }
 ul li:before, ol li:before { content:""; display:inline-block; vertical-align:middle; padding:0px 5px 6px 0px; }
 
 header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight: 400; }
@@ -22,8 +22,15 @@ header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight
 .ext_operation_are > select { display: inline-block !important; width:130px !important; }
 .ext_operation_are > button { vertical-align: top !important; }
 
-.extraction_area { margin-top:50px; }
+.section_area { display:flex; }
+.section_area > div { width:50%;margin-top:30px; }
+.section_area > div:first-child { margin-top:50px; }
+.before_number_area th { text-align:center; }
+.before_number_area p { text-align:right; }
+
+.extraction_area > p { text-align:center; color:#ccc; }
 .extraction_area > ul { margin:0 auto; }
+.extraction_area > ul > li { width:fit-content; padding:5px; }
 .extraction_area > ul > li > span { display:inline-block; width:40px; text-align:center; }
 .extraction_area > ul > li .dec { color:#ca520c; }
 .extraction_area > ul > li .com { color:#9d3eaa; }
@@ -33,3 +40,4 @@ header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight
 #getApiModal > .modal-dialog > .modal-content > .modal-header > .modal-title > button { margin-bottom: 5px; }
 .w80 { width:80px }
 .w100 { width:100px }
+.tCenter { text-align:center; }
