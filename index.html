@@ -18,14 +18,20 @@
         <div class="sub_title">
           <div><i class="bi bi-building-fill"></i> <span>로또번호 추출기</span></div>
         </div>
-        <div class="ext_operation_are">
-          <input type="text" class="form-control negative_manual" placeholder="제외수가 있으면 입력하세요.(숫자와 콤마만 등록-콤마구분)" />
+        <div class="ext_operation_area">
           <select class="form-select extraction_cnt">
             <option value="1" selected>1 Game</option>
             <option value="5">5 Game</option>
             <option value="10">10 Game</option>
           </select>
           <button type="button" class="btn btn-outline-primary w100 extraction_btn">Extraction</button>
+        </div>
+        <div class="toggle_button_area">
+          <i class="bi bi-chevron-double-down toggle_button"></i>
+        </div>
+        <div class="toggle_option">
+          <input type="text" class="form-control include_manual" placeholder="고정수가 있으면 입력하세요.(숫자와 콤마만 등록-콤마구분)" />
+          <input type="text" class="form-control negative_manual" placeholder="제외수가 있으면 입력하세요.(숫자와 콤마만 등록-콤마구분)" />
         </div>
         <hr />
         <section>
@@ -53,9 +59,7 @@
     </main>
     <footer>
       <div class="container d-md-flex justify-content-md-end">
-        <button type="button" class="btn btn-secondary btn-sm getAPILottoNumber" data-bs-toggle="modal" data-bs-target="#getApiModal">
-          당첨번호 가져오기
-        </button>
+        <button type="button" class="btn btn-secondary btn-sm getAPILottoNumber" data-bs-toggle="modal" data-bs-target="#getApiModal">당첨번호 가져오기</button>
       </div>
     </footer>
 

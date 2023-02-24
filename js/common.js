@@ -1,17 +1,22 @@
-const decimalArr = [2,3,5,7,11,13,17,19,23,29,31,37,41,43];     // 4개초과 출현 안함
-const compositeNumberArr = [1,4,8,10,14,16,20,22,25,26,28,32,34,35,38,40,44];       // 4개초과 출현 안함
-const sosabhap = [3,6,9,12,15,18,21,24,27,30,33,36,39,42,45];       // 1~3개 포함
+const decimalArr = [2,3,5,7,11,13,17,19,23,29,31,37,41,43];     // 소수 - 통개적으로 4개초과는 거의 출현 안함
+const compositeNumberArr = [1,4,8,10,14,16,20,22,25,26,28,32,34,35,38,40,44];       // 합성수 - 통개적으로 4개초과는 거의 출현 안함
+const sosabhap = [3,6,9,12,15,18,21,24,27,30,33,36,39,42,45];       // 3의 배수 - 1~3개 포함 추천
 let lottoArr = [];
 let lottoList = [];
-let NegativeNumber = [];
-let NegativeManualNumber = [];
+let negativeNumber = [];
+let negativeManualNumber = [];
+let includeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
     const isGetLocalLotto = true;          // data/저장된 로또번호 읽어오기 여부
     (isGetLocalLotto) ? readTextFile("/data/lottoList.txt") : null;    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
     negativeNumberExt();            // 추출 제외수 초기화
-    NegativeManualNumberExt();      // 메뉴얼 제외수 초기화
+    negativeManualNumberExt();      // 메뉴얼 제외수 초기화
+    includeManualNumberExt();      // 메뉴얼 포함수 초기화
     document.querySelector('.negative_manual').addEventListener('keyup', () => {
-        NegativeManualNumberExt();
+        negativeManualNumberExt();
+    });
+    document.querySelector('.include_manual').addEventListener('keyup', () => {
+        includeManualNumberExt();
     });
     document.querySelector('.extraction_btn').addEventListener('click', () => {
         lottoList = [];
@@ -34,12 +39,27 @@ document.addEventListener('DOMContentLoaded', () => {
         let drwNo = document.querySelector('.drwNo').value.trim();
         (drwNo === '') ? alert('확인 할 회차번호를 입력해 주세요.') : getAPILottoNumber(drwNo);
     });
+    const toggleButton = document.querySelector('.toggle_button');
+    const toggleOption = document.querySelector('.toggle_option');
+    toggleButton.addEventListener('click', () => {
+        if(toggleOption.getAttribute('class').indexOf('show') > -1) {
+            toggleOption.classList.remove('show');
+            toggleOption.classList.add('hide');
+            toggleButton.classList.remove('bi-chevron-double-up');
+            toggleButton.classList.add('bi-chevron-double-down');
+        } else {
+            toggleOption.classList.remove('hide');
+            toggleOption.classList.add('show');
+            toggleButton.classList.remove('bi-chevron-double-down');
+            toggleButton.classList.add('bi-chevron-double-up');
+        }
+    });
 });
 const negativeNumberExt = () => {
-    // NegativeNumber.push(1,2);          // 추출된 제외수 배열로 등록
+    // negativeNumber.push(1,2);          // 추출된 제외수 배열로 등록
 }
-const NegativeManualNumberExt = () => {    
-    NegativeManualNumber = [];
+const negativeManualNumberExt = () => {    
+    negativeManualNumber = [];
     let tnn = document.querySelector('.negative_manual').value.trim();
     (!isCommaNumber(tnn)) ? negativeManualRollback() : null;
     if(tnn !== '') {
@@ -49,7 +69,23 @@ const NegativeManualNumberExt = () => {
             negativeManualRollback();
         } else {
             nn.forEach((data) => {
-                (data.trim() !== '' && parseInt(data) <= 45) ? NegativeManualNumber.push(parseInt(data)) : null;
+                (data.trim() !== '' && parseInt(data) <= 45) ? negativeManualNumber.push(parseInt(data)) : null;
+            });
+        }
+    }
+}
+const includeManualNumberExt = () => {    
+    includeManualNumber = [];
+    let tnn = document.querySelector('.include_manual').value.trim();
+    (!isCommaNumber(tnn)) ? includeManualRollback() : null;    
+    if(tnn !== '') {
+        let nn = tnn.split(',');
+        if(nn.length > 5) {
+            alert('고정수는 5건까지 등록할 수 있습니다.');
+            includeManualRollback();
+        } else {
+            nn.forEach((data) => {
+                (data.trim() !== '' && parseInt(data) <= 45) ? includeManualNumber.push(parseInt(data)) : null;
             });
         }
     }
@@ -57,15 +93,19 @@ const NegativeManualNumberExt = () => {
 const negativeManualRollback = () => {
     return document.querySelector('.negative_manual').value = document.querySelector('.negative_manual').value.slice(0, -1);
 }
+const includeManualRollback = () => {
+    return document.querySelector('.include_manual').value = document.querySelector('.include_manual').value.slice(0, -1);
+}
 const lottoExt = () => {
     let cnt = parseInt(document.querySelector('.extraction_cnt').value);
     for(z=0; z<cnt; z++) {
         let lotto = [];
-        // console.log(NegativeManualNumber);
-        // console.log(NegativeNumber);
+        (includeManualNumber.length > 0) ? lotto = [...includeManualNumber] : null;
+        // console.log(negativeManualNumber);
+        // console.log(negativeNumber);
         while(lotto.length < 6) {
             let num = Math.floor(Math.random() * 45) + 1;
-            (lotto.indexOf(num) < 0 && NegativeNumber.indexOf(num) < 0 && NegativeManualNumber.indexOf(num) < 0) ? lotto.push(num) : null;
+            (lotto.indexOf(num) < 0 && negativeNumber.indexOf(num) < 0 && negativeManualNumber.indexOf(num) < 0) ? lotto.push(num) : null;
         }
         lotto.sort(function(a,b) {
             return a - b;
@@ -91,5 +131,12 @@ const lottoExt = () => {
         });
         lottoStr += '</ul>';
     }
+    lottoStr += '<div class="number-color-info">';
+    lottoStr += '<ul>';
+    lottoStr += '<li><i class="bi bi-circle-fill" style="color:#ca520c;"></i> 소수</li>';
+    lottoStr += '<li><i class="bi bi-circle-fill" style="color:#9d3eaa;"></i> 반복수</li>';
+    lottoStr += '<li><i class="bi bi-circle-fill" style="color:#439cbe;"></i> 3의 배수</li>';
+    lottoStr += '</ul>';
+    lottoStr += '</div>';
     document.querySelector('.extraction_area').innerHTML = lottoStr;
 }

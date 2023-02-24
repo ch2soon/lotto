@@ -16,11 +16,21 @@ ul li:before, ol li:before { content:""; display:inline-block; vertical-align:mi
 
 header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight: 400; }
 
+hr { margin:0.2rem 0; }
+
 .sub_title { position:absolute; margin:8px 0 0 10px; }
-.ext_operation_are { text-align:right; }
-.ext_operation_are > .negative_manual { display: inline-block !important; width:45% !important; }
-.ext_operation_are > select { display: inline-block !important; width:130px !important; }
-.ext_operation_are > button { vertical-align: top !important; }
+.ext_operation_area { text-align:right; }
+.ext_operation_area > .negative_manual { display: inline-block !important; width:45% !important; }
+.ext_operation_area > select { display: inline-block !important; width:130px !important; }
+.ext_operation_area > button { vertical-align: top !important; }
+
+.toggle_button_area { text-align:center; }
+.toggle_button_area > i { cursor:pointer; padding:4px 30px; text-align:center; }
+.toggle_option { display:none; margin:5px 0; }
+.toggle_option.show { display:block; }
+.toggle_option.hide { display:none; }
+
+.toggle_option > input { margin:2px 0; }
 
 .section_area { display:flex; flex-direction:row; }
 .section_area > div { width:50%;margin-top:30px; }
@@ -36,6 +46,9 @@ header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight
 .extraction_area > ul > li .com { color:#9d3eaa; }
 .extraction_area > ul > li .sos { color:#439cbe; }
 
+.number-color-info > ul { display:flex; margin:10px auto; width:fit-content; }
+.number-color-info > ul > li { margin-bottom:0; border-bottom:inherit; }
+
 #getApiModal > .modal-dialog > .modal-content > .modal-header > .modal-title > .drwNo { display:inline-block; width:80px; padding:0.275rem 0.75rem; margin:0 5px 0 10px; }
 #getApiModal > .modal-dialog > .modal-content > .modal-header > .modal-title > button { margin-bottom: 5px; }
 .w80 { width:80px }
@@ -43,7 +56,7 @@ header > h1 { font-size: 36px; text-align: center; margin-top: 30px; font-weight
 .tCenter { text-align:center; }
 
 @media (max-width: 700px) { 
-	.sub_title { position:inherit; }
+	/* .sub_title { position:inherit; } */
 	.ext_operation_are>.negative_manual { width:40%!important; }
 	.ext_operation_are>select { width: 110px!important; }
 	.section_area { flex-direction:column; }
