@@ -54,7 +54,18 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleButton.classList.add('bi-chevron-double-up');
         }
     });
+    const resets = document.querySelectorAll('.reset');
+    resets.forEach( (data) => data.addEventListener('click', () => {
+        document.querySelector('.'+data.getAttribute("data-input-name")).value = '';
+    }));
+    setTooltip();
 });
+const setTooltip = () => {
+    let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+}
 const negativeNumberExt = () => {
     // negativeNumber.push(1,2);          // 추출된 제외수 배열로 등록
 }
@@ -117,7 +128,7 @@ const lottoExt = () => {
         lottoStr += '<ul>';
         lottoList.forEach((res) => {
             let data = '';
-            res.forEach((tnum, tidx) => {                
+            res.forEach((tnum) => {                
                 let suType = '';
                 (decimalArr.indexOf(tnum) > -1) ? suType = 'dec' : null;
                 (compositeNumberArr.indexOf(tnum) > -1) ? suType = 'com' : null;
@@ -133,10 +144,11 @@ const lottoExt = () => {
     }
     lottoStr += '<div class="number-color-info">';
     lottoStr += '<ul>';
-    lottoStr += '<li><i class="bi bi-circle-fill" style="color:#ca520c;"></i> 소수</li>';
+    lottoStr += '<li data-bs-html="true" data-bs-toggle="tooltip" title="Thank You!"><i class="bi bi-circle-fill" style="color:#ca520c;"></i> 소수</li>';
     lottoStr += '<li><i class="bi bi-circle-fill" style="color:#9d3eaa;"></i> 반복수</li>';
     lottoStr += '<li><i class="bi bi-circle-fill" style="color:#439cbe;"></i> 3의 배수</li>';
     lottoStr += '</ul>';
     lottoStr += '</div>';
     document.querySelector('.extraction_area').innerHTML = lottoStr;
+    setTooltip();
 }

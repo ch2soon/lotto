@@ -26,9 +26,10 @@ hr { margin:0.2rem 0; }
 
 .toggle_button_area { text-align:center; }
 .toggle_button_area > i { cursor:pointer; padding:4px 30px; text-align:center; }
-.toggle_option { display:none; margin:5px 0; }
+.toggle_option { display:none; margin:5px 0; text-align:right; }
 .toggle_option.show { display:block; }
 .toggle_option.hide { display:none; }
+.toggle_option > input { width:70%; display:inline-block!important; }
 
 .toggle_option > input { margin:2px 0; }
 
