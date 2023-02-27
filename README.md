@@ -1,4 +1,6 @@
 # 트랜드 따라 잡기
+Frontend 관련 동향 파악 및 실습용으로 사용할 개인 공간
+
 ## Markdown관련
 마크다운 사용법 안내사이트 "Markdown Guide (https://www.markdownguide.org/)"
 
@@ -16,8 +18,8 @@ Material Icon Theme
 Minify
 Prettier - Code formatter
 Project Manager
- 
-# 직접설치 여부 기억없음
+
+**직접설치 여부 기억없음**
 Git Extension Pack
 Git History
 gitignore
