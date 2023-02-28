@@ -8,7 +8,14 @@ let negativeManualNumber = [];
 let includeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
     const isGetLocalLotto = true;          // data/저장된 로또번호 읽어오기 여부
-    (isGetLocalLotto) ? readTextFile("/data/lottoList.txt") : null;    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
+    (isGetLocalLotto) ? readTextFile("/data/lottoList.txt", 10) : null;    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
+    const extCount = document.querySelectorAll('.ext-count');
+    extCount.forEach((data) => {
+        data.addEventListener('click', () => {
+            const extCountCheckVal = document.querySelector('.ext-count:checked').value;
+            readTextFile("/data/lottoList.txt", parseInt(extCountCheckVal));
+        });
+    });
     negativeNumberExt();            // 추출 제외수 초기화
     negativeManualNumberExt();      // 메뉴얼 제외수 초기화
     includeManualNumberExt();      // 메뉴얼 포함수 초기화
@@ -28,6 +35,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
         mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>';
         modalBody.innerHTML = mbStr;
+    });
+    const numberInfoModal = document.getElementById('numberInfoModal');
+    numberInfoModal.addEventListener('show.bs.modal', (e) => {
+        let type = e.relatedTarget.getAttribute('data-type');
+        let str = '';
+        let titleStr = '';
+        if(type === 'getNum' || type === 'setNum') {
+            let dataNum = '';
+            type === 'setNum' ? (
+                titleStr = '추출번호',
+                dataNum = e.relatedTarget.getAttribute('data-set-num')
+            ) : type === 'getNum' ? (
+                titleStr = '당첨번호',
+                dataNum = e.relatedTarget.getAttribute('data-get-num')
+            ) : '';
+            titleStr += ' 정보';
+            str = setDataNum(dataNum);
+        } else {
+            type === 'dec' ? (
+                titleStr = '소수',
+                str = decimalArr.toString()
+            ) : type === 'com' ? (
+                titleStr = '반복수',
+                str = compositeNumberArr.toString()
+            ) : type === 'sos' ? (
+                titleStr = '3의 배수',
+                str = sosabhap.toString()
+            ) : '';
+            titleStr += ' 목록';
+        }
+        const numberInfoTitle = document.querySelectorAll('#numberInfoModal .modal-title')[0];
+        numberInfoTitle.innerText = titleStr;
+        const numberInfoBody = document.querySelectorAll('#numberInfoModal .modal-body')[0];
+        numberInfoBody.innerHTML = str;
     });
     const drwNo = document.querySelector('.drwNo');
     drwNo.addEventListener('keyup', (e) => {
@@ -58,14 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resets.forEach( (data) => data.addEventListener('click', () => {
         document.querySelector('.'+data.getAttribute("data-input-name")).value = '';
     }));
-    setTooltip();
 });
-const setTooltip = () => {
-    let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    });
-}
 const negativeNumberExt = () => {
     // negativeNumber.push(1,2);          // 추출된 제외수 배열로 등록
 }
@@ -128,7 +162,8 @@ const lottoExt = () => {
         lottoStr += '<ul>';
         lottoList.forEach((res) => {
             let data = '';
-            res.forEach((tnum) => {                
+            let attrData = '';
+            res.forEach((tnum,index) => {                
                 let suType = '';
                 (decimalArr.indexOf(tnum) > -1) ? suType = 'dec' : null;
                 (compositeNumberArr.indexOf(tnum) > -1) ? suType = 'com' : null;
@@ -137,18 +172,30 @@ const lottoExt = () => {
                 data += '<span';
                 (suType.trim() != '') ? data += ' class="'+suType+'"' : null;
                 data += '>'+tnum+'</span>';
+                (index > 0) ? attrData += ',' : '';
+                attrData += tnum;
             });
-            lottoStr += '<li>'+data+'</li>';
+            lottoStr += '<li class="cp" data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="setNum" data-set-num="'+attrData+'">'+data+'</li>';
         });
         lottoStr += '</ul>';
     }
     lottoStr += '<div class="number-color-info">';
     lottoStr += '<ul>';
-    lottoStr += '<li data-bs-html="true" data-bs-toggle="tooltip" title="Thank You!"><i class="bi bi-circle-fill" style="color:#ca520c;"></i> 소수</li>';
-    lottoStr += '<li><i class="bi bi-circle-fill" style="color:#9d3eaa;"></i> 반복수</li>';
-    lottoStr += '<li><i class="bi bi-circle-fill" style="color:#439cbe;"></i> 3의 배수</li>';
+    lottoStr += '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="dec"><i class="bi bi-circle-fill" style="color:#ca520c;"></i> 소수</li>';
+    lottoStr += '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="com"><i class="bi bi-circle-fill" style="color:#9d3eaa;"></i> 반복수</li>';
+    lottoStr += '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="sos"><i class="bi bi-circle-fill" style="color:#439cbe;"></i> 3의 배수</li>';
     lottoStr += '</ul>';
     lottoStr += '</div>';
     document.querySelector('.extraction_area').innerHTML = lottoStr;
-    setTooltip();
+}
+const setDataNum = (data) => {
+    let str = '';
+    
+    // decimalArr
+    // compositeNumberArr
+    // sosabhap
+
+    str += data;
+    
+    return str;
 }

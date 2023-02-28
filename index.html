@@ -44,7 +44,19 @@
               <p>번호 추출시 여기에 표시됩니다.</p>
             </div>
             <div class="before_number_area">
-              <p>※ 최근 10회 당첨번호</p>
+              <div class="ext-area">
+                <div class="ext-title">※ 최근 당첨번호</div>
+                <div class="ext-radio">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input ext-count" type="radio" name="ext_cnt" id="ext_cnt1" value="10" checked />
+                    <label class="form-check-label" for="ext_cnt1"> 10회 </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input ext-count" type="radio" name="ext_cnt" id="ext_cnt2" value="20" />
+                    <label class="form-check-label" for="ext_cnt2"> 20회 </label>
+                  </div>
+                </div>
+              </div>
               <table class="table table-bordered">
                 <thead class="table-dark">
                   <tr>
@@ -93,6 +105,24 @@
               <tbody></tbody>
             </table>
           </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="numberInfoModal" tabindex="-1" role="dialog" aria-labelledby="numberInfoModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body"></div>
           <!-- Modal footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>

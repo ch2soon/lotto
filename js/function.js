@@ -68,8 +68,8 @@ String.prototype.string = function(len){let s = '', i = 0; while (i++ < len) { s
 String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
 Number.prototype.zf = function(len){return this.toString().zf(len);};
 // 로컬 파일 읽어오기
-const readTextFile = (file) => {
-    const count = 10;        // 추출할 갯수
+const readTextFile = (file, count=10) => {
+    lottoArr = [];
     let rawFile = new XMLHttpRequest();
     rawFile.open('GET', file, false);
     rawFile.onreadystatechange = function () {
@@ -100,10 +100,11 @@ const readTextFile = (file) => {
                 lottoArr.forEach((data) => {
                     if(i >= count) return false;
                     else {
+                        let dataNum = data.no1+','+data.no2+','+data.no3+','+data.no4+','+data.no5+','+data.no6;
                         str += '<tr>';
                         str += '<td class="tCenter">'+data.round+'</td>';
-                        str += '<td class="tCenter">';
-                        str += data.no1+','+data.no2+','+data.no3+','+data.no4+','+data.no5+','+data.no6;
+                        str += '<td class="tCenter cp" data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="getNum" data-get-num="'+dataNum+'">';
+                        str += dataNum;
                         str += '</td>';
                         str += '<td class="tCenter">'+data.bonusNo+'</td>';
                         str += '<td class="tCenter">'+data.date+'</td>';
