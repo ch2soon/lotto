@@ -52,7 +52,7 @@ hr { margin:0.2rem 0; }
 .extraction_area > ul > li .sos { color:#439cbe; }
 
 .number-color-info > ul { display:flex; margin:10px auto; width:fit-content; }
-.number-color-info > ul > li { cursor:pointer; margin-bottom:0; border-bottom:inherit; }
+.number-color-info > ul > li { cursor:pointer; margin-bottom:0; padding:0 3px; border-bottom:inherit; }
 
 #getApiModal .drwNo { display:inline-block; width:80px; padding:0.275rem 0.75rem; margin:0 5px 0 10px; }
 #getApiModal button { margin-bottom: 5px; }

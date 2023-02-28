@@ -1,6 +1,6 @@
-const decimalArr = [2,3,5,7,11,13,17,19,23,29,31,37,41,43];     // 소수 - 통개적으로 4개초과는 거의 출현 안함
-const compositeNumberArr = [1,4,8,10,14,16,20,22,25,26,28,32,34,35,38,40,44];       // 합성수 - 통개적으로 4개초과는 거의 출현 안함
-const sosabhap = [3,6,9,12,15,18,21,24,27,30,33,36,39,42,45];       // 3의 배수 - 1~3개 포함 추천
+const decimalArr = [2,3,5,7,11,13,17,19,23,29,31,37,41,43];
+const compositeNumberArr = [1,4,8,10,14,16,20,22,25,26,28,32,34,35,38,40,44];
+const sosabhap = [3,6,9,12,15,18,21,24,27,30,33,36,39,42,45];
 let lottoArr = [];
 let lottoList = [];
 let negativeNumber = [];
@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let type = e.relatedTarget.getAttribute('data-type');
         let str = '';
         let titleStr = '';
+        let titleStrs = '';
         if(type === 'getNum' || type === 'setNum') {
             let dataNum = '';
             type === 'setNum' ? (
@@ -50,23 +51,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 titleStr = '당첨번호',
                 dataNum = e.relatedTarget.getAttribute('data-get-num')
             ) : '';
-            titleStr += ' 정보';
-            str = setDataNum(dataNum);
+            titleStrs = titleStr + ' 정보';
+            str = setDataNum(dataNum, titleStr);
         } else {
             type === 'dec' ? (
-                titleStr = '소수',
-                str = decimalArr.toString()
+                titleStrs = '소수',
+                str = '<p><4개초과 출현할 확률 낮음></p>',
+                str += '<p>'+decimalArr.toString()+'</p>'
             ) : type === 'com' ? (
-                titleStr = '반복수',
-                str = compositeNumberArr.toString()
+                titleStrs = '반복수',
+                str = '<p><4개초과 출현할 확률 낮음></p>',
+                str += '<p>'+compositeNumberArr.toString()+'</p>'
             ) : type === 'sos' ? (
-                titleStr = '3의 배수',
-                str = sosabhap.toString()
+                titleStrs = '3의 배수',
+                str = '<p><1~3개 포함 추천></p>',
+                str += '<p>'+sosabhap.toString()+'</p>'
             ) : '';
-            titleStr += ' 목록';
+            titleStrs += ' 목록';
         }
         const numberInfoTitle = document.querySelectorAll('#numberInfoModal .modal-title')[0];
-        numberInfoTitle.innerText = titleStr;
+        numberInfoTitle.innerText = titleStrs;
         const numberInfoBody = document.querySelectorAll('#numberInfoModal .modal-body')[0];
         numberInfoBody.innerHTML = str;
     });
@@ -188,14 +192,41 @@ const lottoExt = () => {
     lottoStr += '</div>';
     document.querySelector('.extraction_area').innerHTML = lottoStr;
 }
-const setDataNum = (data) => {
+const setDataNum = (data, title='번호') => {
     let str = '';
-    
-    // decimalArr
-    // compositeNumberArr
-    // sosabhap
+    let decimalArrText = [];
+    let compositeNumberArrText = [];
+    let sosabhapText = [];
+    let tempData = data.split(',');
+    if(tempData.length > 0) {
+        tempData.forEach((res) => {
+            decimalArr.indexOf(parseInt(res)) > -1 ? decimalArrText.push(res) : null;
+            compositeNumberArr.indexOf(parseInt(res)) > -1 ? compositeNumberArrText.push(res) : null;
+            sosabhap.indexOf(parseInt(res)) > -1 ? sosabhapText.push(res) : null;
+        });
+    }
+    str += '<div class="row">';
+    str += '<div class="col-sm-6">';
+    str += '<div class="card">';
+    str += '<div class="card-body">';
+    str += '<h5 class="card-title">'+title+'</h5>';
+    str += '<p class="card-text">'+data+'</p>';
+    str += '</div>';
+    str += '</div>';
+    str += '</div>';
+    str += '<div class="col-sm-6">';
+    str += '<div class="card">';
+    str += '<div class="card-body">';
+    str += '<h5 class="card-title">정보</h5>';
+    str += '<p class="card-text">';
+    decimalArrText.length > 0 ? str += '소수('+decimalArrText.length+') : ' + decimalArrText.toString() + '<br>' : null;
+    compositeNumberArrText.length > 0 ? str += '반복수('+compositeNumberArrText.length+') : ' + compositeNumberArrText.toString() + '<br>' : null;
+    sosabhapText.length > 0 ? str += '3의 배수('+sosabhapText.length+') : ' + sosabhapText.toString() : null;
+    str += '</p>';
+    str += '</div>';
+    str += '</div>';
+    str += '</div>';
+    str += '</div>';
 
-    str += data;
-    
     return str;
 }
