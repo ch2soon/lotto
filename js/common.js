@@ -2,6 +2,7 @@ const decimalArr = [2,3,5,7,11,13,17,19,23,29,31,37,41,43];
 const compositeNumberArr = [1,4,8,10,14,16,20,22,25,26,28,32,34,35,38,40,44];
 const sosabhap = [3,6,9,12,15,18,21,24,27,30,33,36,39,42,45];
 const pass = 'MTIzNA==';
+const lottoListFilePath = 'L2RhdGEvbG90dG9MaXN0LnR4dA==';
 let lottoArr = [];
 let lottoList = [];
 let negativeNumber = [];
@@ -9,12 +10,12 @@ let negativeManualNumber = [];
 let includeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
     const isGetLocalLotto = true;          // data/저장된 로또번호 읽어오기 여부
-    (isGetLocalLotto) ? readTextFile("/data/lottoList.txt", 10) : null;    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
+    (isGetLocalLotto) ? readTextFile(atob(lottoListFilePath), 10) : null;    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
     const extCount = document.querySelectorAll('.ext-count');
     extCount.forEach((data) => {
         data.addEventListener('click', () => {
             const extCountCheckVal = document.querySelector('.ext-count:checked').value;
-            readTextFile("/data/lottoList.txt", parseInt(extCountCheckVal));
+            readTextFile(atob(lottoListFilePath), parseInt(extCountCheckVal));
         });
     });
     negativeManualNumberExt();      // 메뉴얼 제외수 초기화
