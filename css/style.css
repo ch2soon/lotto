@@ -10,7 +10,7 @@ a { color:#1e87f0; text-decoration:none; cursor:pointer; }
 a:hover { color:#0f6ecd; text-decoration:underline; }
 b, strong { font-weight:900; }
 
-ul, ol { list-style:none; margin:0px; padding:0px; max-width:300px; width:100%; }
+ul, ol { list-style:none; margin:0px; padding:0px; /*max-width:300px;*/ width:100%; }
 ul li, ol li { margin-bottom:5px; border-bottom:1px solid #efefef; /*font-size:12px;*/ }
 ul li:before, ol li:before { content:""; display:inline-block; vertical-align:middle; padding:0px 5px 6px 0px; }
 

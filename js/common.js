@@ -30,29 +30,24 @@ document.addEventListener('DOMContentLoaded', () => {
         lottoList = [];
         lottoExt();
     });
-
     var myModal = new bootstrap.Modal(document.getElementById('getApiModal'), {
         backdrop: "static",
         keyboard: false,
         focus : false
-      });
-    document.querySelector('.getAPILottoNumber').addEventListener('click', () => {
-        
-        let input = prompt('비밀번호', '비밀번호를 입력해주세요!');
-        if(btoa(input.trim()) === pass) console.log("OK");
-        else console.log("NO");
-
-        myModal.hide();
     });
-
-    // const getApiModal = document.getElementById('getApiModal');
-    // getApiModal.addEventListener('show.bs.modal', () => {
-    //     document.querySelector('.drwNo').value = '';
-    //     const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
-    //     mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>';
-    //     modalBody.innerHTML = mbStr;
-    // });
-
+    document.querySelector('.getAPILottoNumber').addEventListener('click', () => {
+        let input = prompt('비밀번호', '비밀번호를 입력해주세요!');
+        if(btoa(input) === pass) {
+            document.querySelector('.drwNo').value = '';
+            const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
+            mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>';
+            modalBody.innerHTML = mbStr;
+            myModal.show();
+        } else {
+            alert("잘못된 비밀번호입니다.");
+            myModal.hide();
+        }
+    });
     const numberInfoModal = document.getElementById('numberInfoModal');
     numberInfoModal.addEventListener('show.bs.modal', (e) => {
         let type = e.relatedTarget.getAttribute('data-type');
@@ -275,6 +270,5 @@ const setDataNum = (mode, data, title='번호') => {
     str += '</div>';
     str += '</div>';
     str += '</div>';
-
     return str;
 }
