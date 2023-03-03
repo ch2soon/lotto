@@ -58,6 +58,7 @@ hr { margin:0.2rem 0; }
 #getApiModal button { margin-bottom: 5px; }
 
 #numberInfoModal .modal-body { margin:10px; }
+#numberInfoModal .modal-body > div > div:last-child { margin-top:0; }
 #numberInfoModal .modal-body .list-group .list-group-item > div { float:left;width:18px; }
 #numberInfoModal .modal-body .list-group .list-group-item > span { margin-left:2px; }
 
@@ -65,7 +66,6 @@ hr { margin:0.2rem 0; }
 .w100 { width:100px }
 .tCenter { text-align:center; }
 label, .cp { cursor:pointer; }
-
 
 @media (max-width: 700px) { 
 	/* .sub_title { position:inherit; } */
@@ -75,4 +75,8 @@ label, .cp { cursor:pointer; }
 	.section_area > div { width:100%; }
 	.before_number_area th { font-size:1rem; }
 	.before_number_area td { font-size:0.9rem; }
+} 
+
+@media (max-width: 575px) {
+	#numberInfoModal .modal-body > div > div:last-child { margin-top:20px; }
 } 
