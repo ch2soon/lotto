@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
             readTextFile("/data/lottoList.txt", parseInt(extCountCheckVal));
         });
     });
-    negativeNumberExt();            // 추출 제외수 초기화
     negativeManualNumberExt();      // 메뉴얼 제외수 초기화
     includeManualNumberExt();      // 메뉴얼 포함수 초기화
     document.querySelector('.negative_manual').addEventListener('keyup', () => {
@@ -118,9 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.'+data.getAttribute("data-input-name")).value = '';
     }));
 });
-const negativeNumberExt = () => {
-    // negativeNumber.push(1,2);          // 추출된 제외수 배열로 등록
-}
 const negativeManualNumberExt = () => {    
     negativeManualNumber = [];
     let tnn = document.querySelector('.negative_manual').value.trim();
@@ -164,8 +160,6 @@ const lottoExt = () => {
     for(z=0; z<cnt; z++) {
         let lotto = [];
         (includeManualNumber.length > 0) ? lotto = [...includeManualNumber] : null;
-        // console.log(negativeManualNumber);
-        // console.log(negativeNumber);
         while(lotto.length < 6) {
             let num = Math.floor(Math.random() * 45) + 1;
             (lotto.indexOf(num) < 0 && negativeNumber.indexOf(num) < 0 && negativeManualNumber.indexOf(num) < 0) ? lotto.push(num) : null;
@@ -186,7 +180,6 @@ const lottoExt = () => {
                 (decimalArr.indexOf(tnum) > -1) ? suType = 'dec' : null;
                 (compositeNumberArr.indexOf(tnum) > -1) ? suType = 'com' : null;
                 (sosabhap.indexOf(tnum) > -1) ? suType = 'sos' : null;
-                // data += (tidx > 0 ? ',' : '');
                 data += '<span';
                 (suType.trim() != '') ? data += ' class="'+suType+'"' : null;
                 data += '>'+tnum+'</span>';

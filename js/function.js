@@ -127,7 +127,6 @@ const getAPILottoNumber = (drwNo) => {
         const getData = (url) => fetch(url, { headers });
         getData(url).then(resp => {
             if(resp.ok) return resp.json();
-            // console.log('resp', resp, respJson);
             throw new Error('Network response was not ok.');
         }).then(data => {
             if(data.returnValue == 'success') {
