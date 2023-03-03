@@ -1,6 +1,7 @@
 const decimalArr = [2,3,5,7,11,13,17,19,23,29,31,37,41,43];
 const compositeNumberArr = [1,4,8,10,14,16,20,22,25,26,28,32,34,35,38,40,44];
 const sosabhap = [3,6,9,12,15,18,21,24,27,30,33,36,39,42,45];
+const pass = 'MTIzNA==';
 let lottoArr = [];
 let lottoList = [];
 let negativeNumber = [];
@@ -29,13 +30,29 @@ document.addEventListener('DOMContentLoaded', () => {
         lottoList = [];
         lottoExt();
     });
-    const getApiModal = document.getElementById('getApiModal');
-    getApiModal.addEventListener('show.bs.modal', () => {
-        document.querySelector('.drwNo').value = '';
-        const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
-        mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>';
-        modalBody.innerHTML = mbStr;
+
+    var myModal = new bootstrap.Modal(document.getElementById('getApiModal'), {
+        backdrop: "static",
+        keyboard: false,
+        focus : false
+      });
+    document.querySelector('.getAPILottoNumber').addEventListener('click', () => {
+        
+        let input = prompt('비밀번호', '비밀번호를 입력해주세요!');
+        if(btoa(input.trim()) === pass) console.log("OK");
+        else console.log("NO");
+
+        myModal.hide();
     });
+
+    // const getApiModal = document.getElementById('getApiModal');
+    // getApiModal.addEventListener('show.bs.modal', () => {
+    //     document.querySelector('.drwNo').value = '';
+    //     const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
+    //     mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>';
+    //     modalBody.innerHTML = mbStr;
+    // });
+
     const numberInfoModal = document.getElementById('numberInfoModal');
     numberInfoModal.addEventListener('show.bs.modal', (e) => {
         let type = e.relatedTarget.getAttribute('data-type');
@@ -45,14 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if(type === 'getNum' || type === 'setNum') {
             let dataNum = '';
             type === 'setNum' ? (
-                titleStr = '추출번호',
-                dataNum = e.relatedTarget.getAttribute('data-set-num')
+                titleStr = '최근 출현회차',
+                dataNum = e.relatedTarget.getAttribute('data-set-num'),
+                mode = 'set'
             ) : type === 'getNum' ? (
                 titleStr = '당첨번호',
-                dataNum = e.relatedTarget.getAttribute('data-get-num')
+                dataNum = e.relatedTarget.getAttribute('data-get-num'),
+                mode = 'get'
             ) : '';
             titleStrs = titleStr + ' 정보';
-            str = setDataNum(dataNum, titleStr);
+            str = setDataNum(mode, dataNum, titleStr);
         } else {
             type === 'dec' ? (
                 titleStrs = '소수',
@@ -192,17 +211,32 @@ const lottoExt = () => {
     lottoStr += '</div>';
     document.querySelector('.extraction_area').innerHTML = lottoStr;
 }
-const setDataNum = (data, title='번호') => {
+const setDataNum = (mode, data, title='번호') => {
+    let viewCnt = parseInt(document.querySelector('.ext-count:checked').value);
+    let checkDataArr = lottoArr.slice(0,viewCnt);
     let str = '';
     let decimalArrText = [];
     let compositeNumberArrText = [];
     let sosabhapText = [];
+    let checkRoundArr = [];
+    let checkRoundObj = {};
     let tempData = data.split(',');
     if(tempData.length > 0) {
-        tempData.forEach((res) => {
+        tempData.forEach((res,index) => {
+            checkRoundObj = { no:tempData[index], round:null }
             decimalArr.indexOf(parseInt(res)) > -1 ? decimalArrText.push(res) : null;
             compositeNumberArr.indexOf(parseInt(res)) > -1 ? compositeNumberArrText.push(res) : null;
             sosabhap.indexOf(parseInt(res)) > -1 ? sosabhapText.push(res) : null;
+            let chkSetData = '';
+            checkDataArr.forEach((chkData) => {
+                let checkTempArr = [chkData.round.toString(), chkData.no1.toString(), chkData.no2.toString(), chkData.no3.toString(), chkData.no4.toString(), chkData.no5.toString(), chkData.no6.toString()];                
+                if(checkTempArr.indexOf(res.toString()) > -1) {
+                    chkSetData.trim() !== '' ? chkSetData = chkSetData+',' : null;
+                    chkSetData = chkSetData + checkTempArr[0];
+                }
+            });
+            checkRoundObj.round = chkSetData;
+            checkRoundArr.push(checkRoundObj);
         });
     }
     str += '<div class="row">';
@@ -210,14 +244,28 @@ const setDataNum = (data, title='번호') => {
     str += '<div class="card">';
     str += '<div class="card-body">';
     str += '<h5 class="card-title">'+title+'</h5>';
-    str += '<p class="card-text">'+data+'</p>';
+    str += '<p class="card-text">';
+    str += data;
+    str += '</p>';
     str += '</div>';
+    if(mode === 'set') {
+        str += '<ul class="list-group list-group-flush">';
+        checkRoundArr.forEach((getData) => {
+            str += '<li class="list-group-item">';
+            str += '<div>'+getData.no+'</div> : ';
+            str += '<span>';
+            str += getData.round.trim() === '' ? '-' : getData.round;
+            str += '</span>';
+            str += '</li>';
+        });
+        str += '</ul>';
+    }
     str += '</div>';
     str += '</div>';
     str += '<div class="col-sm-6">';
     str += '<div class="card">';
     str += '<div class="card-body">';
-    str += '<h5 class="card-title">정보</h5>';
+    str += '<h5 class="card-title">참고수 정보</h5>';
     str += '<p class="card-text">';
     decimalArrText.length > 0 ? str += '소수('+decimalArrText.length+') : ' + decimalArrText.toString() + '<br>' : null;
     compositeNumberArrText.length > 0 ? str += '반복수('+compositeNumberArrText.length+') : ' + compositeNumberArrText.toString() + '<br>' : null;

@@ -58,6 +58,8 @@ hr { margin:0.2rem 0; }
 #getApiModal button { margin-bottom: 5px; }
 
 #numberInfoModal .modal-body { margin:10px; }
+#numberInfoModal .modal-body .list-group .list-group-item > div { float:left;width:18px; }
+#numberInfoModal .modal-body .list-group .list-group-item > span { margin-left:2px; }
 
 .w80 { width:80px }
 .w100 { width:100px }
