@@ -8,6 +8,7 @@ Frontend 관련 동향 파악 및 실습용으로 사용할 개인 공간
 ```
 Auto Close Tag
 Auto Rename Tag
+Doxygen Documentation Generator
 ENV
 ESLint
 GitLens
@@ -18,6 +19,8 @@ Material Icon Theme
 Minify
 Prettier - Code formatter
 Project Manager
+Thunder Client
+
 
 **직접설치 여부 기억없음**
 Git Extension Pack
