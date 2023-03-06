@@ -30,27 +30,37 @@ document.addEventListener('DOMContentLoaded', () => {
         lottoList = [];
         lottoExt();
     });
-    var myModal = new bootstrap.Modal(document.getElementById('getApiModal'), {
+    let myModal = new bootstrap.Modal(document.getElementById('getApiModal'), {
         backdrop: "static",
         keyboard: false,
         focus : false
     });
     document.querySelector('.getAPILottoNumber').addEventListener('click', () => {
+        const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
         let input = prompt('비밀번호', '비밀번호를 입력해주세요!');
-        if(btoa(input) === pass) {
-            document.querySelector('.drwNo').value = '';
-            const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
-            mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>';
-            modalBody.innerHTML = mbStr;
-            myModal.show();
-        } else {
-            alert("잘못된 비밀번호입니다.");
-            myModal.hide();
-        }
+        let msg = ''
+        btoa(input) === pass ? (
+            document.querySelector('.drwNo').value = '',
+            mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>',
+            modalBody.innerHTML = mbStr,
+            myModal.show()
+        ) : (
+            msg = (input === null) ? '비밀번호 입력이 취소되었습니다.' : '잘못된 비밀번호입니다.',
+            alert(msg),
+            myModal.hide()
+        );
     });
     const numberInfoModal = document.getElementById('numberInfoModal');
     numberInfoModal.addEventListener('show.bs.modal', (e) => {
         let type = e.relatedTarget.getAttribute('data-type');
+        const modalSizeClass = document.querySelector('#numberInfoModal .modal-dialog');
+        type === 'setNum' ? (
+            modalSizeClass.classList.remove('modal-md'),
+            modalSizeClass.classList.add('modal-lg')
+        ) : (
+            modalSizeClass.classList.remove('modal-lg'),
+            modalSizeClass.classList.add('modal-md')
+        );
         let str = '';
         let titleStr = '';
         let titleStrs = '';
@@ -101,17 +111,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.querySelector('.toggle_button');
     const toggleOption = document.querySelector('.toggle_option');
     toggleButton.addEventListener('click', () => {
-        if(toggleOption.getAttribute('class').indexOf('show') > -1) {
-            toggleOption.classList.remove('show');
-            toggleOption.classList.add('hide');
-            toggleButton.classList.remove('bi-chevron-double-up');
-            toggleButton.classList.add('bi-chevron-double-down');
-        } else {
-            toggleOption.classList.remove('hide');
-            toggleOption.classList.add('show');
-            toggleButton.classList.remove('bi-chevron-double-down');
-            toggleButton.classList.add('bi-chevron-double-up');
-        }
+        toggleOption.getAttribute('class').indexOf('show') > -1 ? (
+            toggleOption.classList.remove('show'),
+            toggleOption.classList.add('hide'),
+            toggleButton.classList.remove('bi-chevron-double-up'),
+            toggleButton.classList.add('bi-chevron-double-down')
+        ) : (
+            toggleOption.classList.remove('hide'),
+            toggleOption.classList.add('show'),
+            toggleButton.classList.remove('bi-chevron-double-down'),
+            toggleButton.classList.add('bi-chevron-double-up')
+        )
     });
     const resets = document.querySelectorAll('.reset');
     resets.forEach( (data) => data.addEventListener('click', () => {
@@ -124,14 +134,14 @@ const negativeManualNumberExt = () => {
     (!isCommaNumber(tnn)) ? negativeManualRollback() : null;
     if(tnn !== '') {
         let nn = tnn.split(',');
-        if(nn.length > 10) {
-            alert('제외수는 10건까지 등록할 수 있습니다.');
-            negativeManualRollback();
-        } else {
+        nn.length > 10 ? (
+            alert('제외수는 10건까지 등록할 수 있습니다.'),
+            negativeManualRollback()
+        ) : (
             nn.forEach((data) => {
                 (data.trim() !== '' && parseInt(data) <= 45) ? negativeManualNumber.push(parseInt(data)) : null;
-            });
-        }
+            })
+        );
     }
 }
 const includeManualNumberExt = () => {    
@@ -140,14 +150,14 @@ const includeManualNumberExt = () => {
     (!isCommaNumber(tnn)) ? includeManualRollback() : null;    
     if(tnn !== '') {
         let nn = tnn.split(',');
-        if(nn.length > 5) {
-            alert('고정수는 5건까지 등록할 수 있습니다.');
-            includeManualRollback();
-        } else {
+        nn.length > 5 ? (
+            alert('고정수는 5건까지 등록할 수 있습니다.'),
+            includeManualRollback()
+        ) : (
             nn.forEach((data) => {
                 (data.trim() !== '' && parseInt(data) <= 45) ? includeManualNumber.push(parseInt(data)) : null;
-            });
-        }
+            })
+        );
     }
 }
 const negativeManualRollback = () => {
