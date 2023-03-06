@@ -38,17 +38,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.getAPILottoNumber').addEventListener('click', () => {
         const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
         let input = prompt('비밀번호', '비밀번호를 입력해주세요!');
+        let flag = true;
         let msg = ''
-        btoa(input) === pass ? (
-            document.querySelector('.drwNo').value = '',
-            mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>',
-            modalBody.innerHTML = mbStr,
-            myModal.show()
+        isNaN(input) ? (
+            flag = false,
+            msg = '정상적인 비밀번호를 입력해주세요.'
         ) : (
-            msg = (input === null) ? '비밀번호 입력이 취소되었습니다.' : '잘못된 비밀번호입니다.',
+            btoa(input) === pass ? (
+                document.querySelector('.drwNo').value = '',
+                mbStr = '<tr><td colspan="4" style="text-align:center;">확인 할 회차번호를 입력 후 전송버튼을 클릭하세요.</td></tr>',
+                modalBody.innerHTML = mbStr,
+                myModal.show()
+            ) : (
+                flag = false,
+                msg = (input === null) ? '비밀번호 입력이 취소되었습니다.' : '잘못된 비밀번호입니다.'
+            )
+        );
+        !flag ? (
             alert(msg),
             myModal.hide()
-        );
+        ) : null;
     });
     const numberInfoModal = document.getElementById('numberInfoModal');
     numberInfoModal.addEventListener('show.bs.modal', (e) => {
@@ -64,8 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let str = '';
         let titleStr = '';
         let titleStrs = '';
-        if(type === 'getNum' || type === 'setNum') {
-            let dataNum = '';
+        let dataNum = '';
+        (type === 'getNum' || type === 'setNum') ? (
             type === 'setNum' ? (
                 titleStr = '최근 출현회차',
                 dataNum = e.relatedTarget.getAttribute('data-set-num'),
@@ -74,10 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 titleStr = '당첨번호',
                 dataNum = e.relatedTarget.getAttribute('data-get-num'),
                 mode = 'get'
-            ) : '';
-            titleStrs = titleStr + ' 정보';
-            str = setDataNum(mode, dataNum, titleStr);
-        } else {
+            ) : '',
+            titleStrs = titleStr + ' 정보',
+            str = setDataNum(mode, dataNum, titleStr)
+        ) : (
             type === 'dec' ? (
                 titleStrs = '소수',
                 str = '<p><4개초과 출현할 확률 낮음></p>',
@@ -90,9 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 titleStrs = '3의 배수',
                 str = '<p><1~3개 포함 추천></p>',
                 str += '<p>'+sosabhap.toString()+'</p>'
-            ) : '';
-            titleStrs += ' 목록';
-        }
+            ) : '',
+            titleStrs += ' 목록'
+        )
         const numberInfoTitle = document.querySelectorAll('#numberInfoModal .modal-title')[0];
         numberInfoTitle.innerText = titleStrs;
         const numberInfoBody = document.querySelectorAll('#numberInfoModal .modal-body')[0];
