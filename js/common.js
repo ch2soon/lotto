@@ -10,7 +10,7 @@ let negativeManualNumber = [];
 let includeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
     const isGetLocalLotto = true;          // data/저장된 로또번호 읽어오기 여부
-    (isGetLocalLotto) ? readTextFile(atob(lottoListFilePath), 10) : null;    // lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
+    (isGetLocalLotto) ? readTextFile(atob(lottoListFilePath), 10) : null;
     const extCount = document.querySelectorAll('.ext-count');
     extCount.forEach((data) => {
         data.addEventListener('click', () => {
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 str += '<p>'+sosabhap.toString()+'</p>'
             ) : '',
             titleStrs += ' 목록'
-        )
+        );
         const numberInfoTitle = document.querySelectorAll('#numberInfoModal .modal-title')[0];
         numberInfoTitle.innerText = titleStrs;
         const numberInfoBody = document.querySelectorAll('#numberInfoModal .modal-body')[0];
@@ -130,13 +130,16 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleOption.classList.add('show'),
             toggleButton.classList.remove('bi-chevron-double-down'),
             toggleButton.classList.add('bi-chevron-double-up')
-        )
+        );
     });
     const resets = document.querySelectorAll('.reset');
     resets.forEach( (data) => data.addEventListener('click', () => {
         document.querySelector('.'+data.getAttribute("data-input-name")).value = '';
     }));
 });
+/**
+ * 제외수 - 설정값이 나오면 번호 재추출
+ */
 const negativeManualNumberExt = () => {    
     negativeManualNumber = [];
     let tnn = document.querySelector('.negative_manual').value.trim();
@@ -153,6 +156,9 @@ const negativeManualNumberExt = () => {
         );
     }
 }
+/**
+ * 포함수 - 로또번호 전체 배열에 포함수 강제 추가
+ */
 const includeManualNumberExt = () => {    
     includeManualNumber = [];
     let tnn = document.querySelector('.include_manual').value.trim();
@@ -175,6 +181,9 @@ const negativeManualRollback = () => {
 const includeManualRollback = () => {
     return document.querySelector('.include_manual').value = document.querySelector('.include_manual').value.slice(0, -1);
 }
+/**
+ * 로또번호 추출
+ */
 const lottoExt = () => {
     let cnt = parseInt(document.querySelector('.extraction_cnt').value);
     for(z=0; z<cnt; z++) {
@@ -219,6 +228,13 @@ const lottoExt = () => {
     lottoStr += '</div>';
     document.querySelector('.extraction_area').innerHTML = lottoStr;
 }
+/**
+ * 지난 당첨번호/추출번호의 정보를 레이어에 출력
+ * @param {당첨/추출 여부} mode 
+ * @param {해당 번호} data 
+ * @param {레이어 타이틀} title 
+ * @returns String
+ */
 const setDataNum = (mode, data, title='번호') => {
     let viewCnt = parseInt(document.querySelector('.ext-count:checked').value);
     let checkDataArr = lottoArr.slice(0,viewCnt);

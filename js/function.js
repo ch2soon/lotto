@@ -1,49 +1,80 @@
-// 문자열에서 콤마 제거
+/**
+ * 문자열에서 콤마 제거
+ * @param {String} str
+ * @returns 
+ */
 const deleteCommas = (str) => {
     return str.replace(/,/g, "");
 }
-// 숫자에 콤마 넣기
+/**
+ * 숫자에 3자리마다 콤마 넣기
+ * @param {int} num 
+ * @returns 
+ */
 const numberWithCommas = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-// 숫자인지 확인
+/**
+ * 숫자인지 확인
+ * @param {data} val 
+ * @returns 
+ */
 const isNumber = (val) => {
     let pattern = /^[0-9]*$/;
     return pattern.test(val);
 }
-// 숫자와 콤마인지 확인
+/**
+ * 숫자와 콤마인지 확인
+ * @param {data} val 
+ * @returns 
+ */
 const isCommaNumber = (val) => {
     let pattern = /^[0-9,]*$/;
     return pattern.test(val);
 }
-// 숫자만 입력
+/**
+ * 숫자만 입력
+ * @param {data} str 
+ * @returns 
+ */
 const onlyNumber = (str) => {
     return str.replace(/[^0-9.]/g, "").replace(/(\.*)\./g, "$1");
 }
-// 휴대폰 번호 대시/하이픈 추가
+/**
+ * 휴대폰 번호 대시/하이픈 추가
+ * @param {int} str 
+ * @returns 
+ */
 const phoneWithHyphen = (str) => {
     return str === null
     ? null
     : str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3");
 }
-// 휴대폰 번호 입력 체크
+/**
+ * 휴대폰 번호 형식 체크
+ * @param {data} str 
+ * @returns 
+ */
 const checkPhoneNumber = (str) => {
     const check = /^(?:(010\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/;
     //하이픈 입력 받으려면 /^(?:(010-\d{4})|(01[1|6|7|8|9]-\d{3,4}))-(\d{4})$/
     return check.test(str);
 }
-/* Example!!
-//2011년 09월 11일 오후 03시 45분 42초
-console.log(new Date().format("yyyy년 MM월 dd일 a/p hh시 mm분 ss초")); 
-//2011-09-11
-console.log(new Date().format("yyyy-MM-dd")); 
-//'11 09.11
-console.log(new Date().format("'yy MM.dd")); 
-//2011-09-11 일요일
-console.log(new Date().format("yyyy-MM-dd E")); 
-//현재년도 : 2011
-console.log("현재년도 : " + new Date().format("yyyy"));
-*/
+/**
+ * Example!!
+ * 2011년 09월 11일 오후 03시 45분 42초
+ * console.log(new Date().format("yyyy년 MM월 dd일 a/p hh시 mm분 ss초")); 
+ * 2011-09-11
+ * console.log(new Date().format("yyyy-MM-dd")); 
+ * '11 09.11
+ * console.log(new Date().format("'yy MM.dd")); 
+ * 2011-09-11 일요일
+ * console.log(new Date().format("yyyy-MM-dd E")); 
+ * 현재년도 : 2011
+ * console.log("현재년도 : " + new Date().format("yyyy"));
+ * @param {date.format} f 
+ * @returns 
+ */
 Date.prototype.format = function(f) {
     if (!this.valueOf()) return " "; 
     let weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
@@ -67,7 +98,12 @@ Date.prototype.format = function(f) {
 String.prototype.string = function(len){let s = '', i = 0; while (i++ < len) { s += this; } return s;};
 String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
 Number.prototype.zf = function(len){return this.toString().zf(len);};
-// 로컬 파일 읽어오기
+/**
+ * 로컬 파일 읽어오기
+ * lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
+ * @param {파일경로} file 
+ * @param {출력할 리스트 수} count 
+ */
 const readTextFile = (file, count=10) => {
     lottoArr = [];
     let rawFile = new XMLHttpRequest();
@@ -119,7 +155,10 @@ const readTextFile = (file, count=10) => {
     }
     rawFile.send(null);
 }
-// API로 로또번호 가져오기 - drwNo:회차
+/**
+ * API로 로또번호 가져오기 - drwNo:회차
+ * @param {가져올 회차번호} drwNo 
+ */
 const getAPILottoNumber = (drwNo) => {
     try {
         const url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='+drwNo;
