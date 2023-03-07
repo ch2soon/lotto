@@ -134,7 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     const resets = document.querySelectorAll('.reset');
     resets.forEach( (data) => data.addEventListener('click', () => {
-        document.querySelector('.'+data.getAttribute("data-input-name")).value = '';
+        let inputName = data.getAttribute("data-input-name");
+        inputName === 'include_manual' ? includeManualNumber = [] : null;
+        document.querySelector('.'+inputName).value = '';
     }));
 });
 /**
@@ -162,17 +164,12 @@ const negativeManualNumberExt = () => {
 const includeManualNumberExt = () => {    
     includeManualNumber = [];
     let tnn = document.querySelector('.include_manual').value.trim();
-    (!isCommaNumber(tnn)) ? includeManualRollback() : null;    
+    (!isCommaNumber(tnn)) ? includeManualRollback() : null;
     if(tnn !== '') {
         let nn = tnn.split(',');
-        nn.length > 5 ? (
-            alert('고정수는 5건까지 등록할 수 있습니다.'),
-            includeManualRollback()
-        ) : (
-            nn.forEach((data) => {
-                (data.trim() !== '' && parseInt(data) <= 45) ? includeManualNumber.push(parseInt(data)) : null;
-            })
-        );
+        nn.forEach((data) => {
+            (data.trim() !== '' && parseInt(data) <= 45) ? includeManualNumber.push(parseInt(data)) : null;
+        });
     }
 }
 const negativeManualRollback = () => {
@@ -188,10 +185,24 @@ const lottoExt = () => {
     let cnt = parseInt(document.querySelector('.extraction_cnt').value);
     for(z=0; z<cnt; z++) {
         let lotto = [];
-        (includeManualNumber.length > 0) ? lotto = [...includeManualNumber] : null;
-        while(lotto.length < 6) {
-            let num = Math.floor(Math.random() * 45) + 1;
-            (lotto.indexOf(num) < 0 && negativeNumber.indexOf(num) < 0 && negativeManualNumber.indexOf(num) < 0) ? lotto.push(num) : null;
+        let incLotto = [];
+        let incNum = 0;
+        if(includeManualNumber.length > 0) {
+            if(includeManualNumber.length <= 6) {
+                lotto = [...includeManualNumber];
+            } else {
+                while(incLotto.length < 6) {
+                    incNum = includeManualNumber[Math.floor(Math.random() * includeManualNumber.length)];
+                    (incLotto.indexOf(incNum) < 0) ? incLotto.push(incNum) : null;
+                }
+                lotto = incLotto;
+            }     
+        }
+        if(includeManualNumber.length <= 6) {
+            while(lotto.length < 6) {
+                let num = Math.floor(Math.random() * 45) + 1;
+                (lotto.indexOf(num) < 0 && negativeNumber.indexOf(num) < 0 && negativeManualNumber.indexOf(num) < 0) ? lotto.push(num) : null;
+            }
         }
         lotto.sort(function(a,b) {
             return a - b;
