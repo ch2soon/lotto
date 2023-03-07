@@ -136,11 +136,12 @@ document.addEventListener('DOMContentLoaded', () => {
     resets.forEach( (data) => data.addEventListener('click', () => {
         let inputName = data.getAttribute("data-input-name");
         inputName === 'include_manual' ? includeManualNumber = [] : null;
+        inputName === 'negative_manual' ? negativeManualNumber = [] : null;
         document.querySelector('.'+inputName).value = '';
     }));
 });
 /**
- * 제외수 - 설정값이 나오면 번호 재추출
+ * 사용자 제외수 - 설정값이 나오면 번호 재추출
  */
 const negativeManualNumberExt = () => {    
     negativeManualNumber = [];
@@ -148,8 +149,8 @@ const negativeManualNumberExt = () => {
     (!isCommaNumber(tnn)) ? negativeManualRollback() : null;
     if(tnn !== '') {
         let nn = tnn.split(',');
-        nn.length > 10 ? (
-            alert('제외수는 10건까지 등록할 수 있습니다.'),
+        nn.length > 20 ? (
+            alert('제외수는 20건까지 등록할 수 있습니다.'),
             negativeManualRollback()
         ) : (
             nn.forEach((data) => {
@@ -186,24 +187,10 @@ const lottoExt = () => {
     for(z=0; z<cnt; z++) {
         let lotto = [];
         let incLotto = [];
-        let incNum = 0;
-        if(includeManualNumber.length > 0) {
-            if(includeManualNumber.length <= 6) {
-                lotto = [...includeManualNumber];
-            } else {
-                while(incLotto.length < 6) {
-                    incNum = includeManualNumber[Math.floor(Math.random() * includeManualNumber.length)];
-                    (incLotto.indexOf(incNum) < 0) ? incLotto.push(incNum) : null;
-                }
-                lotto = incLotto;
-            }     
-        }
-        if(includeManualNumber.length <= 6) {
-            while(lotto.length < 6) {
-                let num = Math.floor(Math.random() * 45) + 1;
-                (lotto.indexOf(num) < 0 && negativeNumber.indexOf(num) < 0 && negativeManualNumber.indexOf(num) < 0) ? lotto.push(num) : null;
-            }
-        }
+        // 고정수가 6건 미만이면 lotto배열에 복사, 6건보다 많으면 고정수중 랜덤으로 6건 뽑아 출력
+        includeManualNumber.length > 0 ? includeManualNumber.length <= 6 ? lotto = [...includeManualNumber] : lotto = setRandomNumber('inc', incLotto) : null;
+        // 고정수가 6건 미만일때 1~45중 랜덤수 뽑아 lotto배열에 저장
+        includeManualNumber.length <= 6 ? lotto = setRandomNumber('def', lotto) : null;
         lotto.sort(function(a,b) {
             return a - b;
         });
@@ -238,6 +225,25 @@ const lottoExt = () => {
     lottoStr += '</ul>';
     lottoStr += '</div>';
     document.querySelector('.extraction_area').innerHTML = lottoStr;
+}
+/**
+ * 고정수/랜덤 뽑기 함수화
+ * @param {고정수/랜덤} mode 
+ * @param {array} arr 
+ * @returns 
+ */
+const setRandomNumber = (mode, arr) => {
+    while(arr.length < 6) {
+        let num = 0;
+        mode === 'inc' ? (
+            num = includeManualNumber[Math.floor(Math.random() * includeManualNumber.length)],
+            (arr.indexOf(num) < 0) ? arr.push(num) : null
+        ) : (
+            num = Math.floor(Math.random() * 45) + 1,
+            (arr.indexOf(num) < 0 && negativeNumber.indexOf(num) < 0 && negativeManualNumber.indexOf(num) < 0) ? arr.push(num) : null
+        );
+    }
+    return arr;
 }
 /**
  * 지난 당첨번호/추출번호의 정보를 레이어에 출력
