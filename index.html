@@ -18,7 +18,7 @@
     <main>
       <div class="container">
         <div class="sub_title">
-          <div><i class="bi bi-building-fill"></i> <span>로또번호 추출기</span></div>
+          <div><i class="bi bi-building-fill"></i> <span>추출기</span></div>
         </div>
         <div class="ext_operation_area">
           <select class="form-select extraction_cnt">
@@ -33,10 +33,15 @@
         </div>
         <div class="toggle_option">
           <p>* 고정수의 값은 제외수 지정시에 무시되어 무조건 추출됩니다.</p>
-          <input type="text" class="form-control include_manual" placeholder="고정수가 있으면 입력하세요.(숫자와 콤마만 등록-콤마구분)" />
-          <button type="button" class="btn btn-secondary w80 reset" data-input-name="include_manual">Reset</button>
-          <input type="text" class="form-control negative_manual" placeholder="제외수가 있으면 입력하세요.(숫자와 콤마만 등록-콤마구분)" />
-          <button type="button" class="btn btn-secondary w80 reset" data-input-name="negative_manual">Reset</button>
+          <div>
+            <input type="text" class="form-control include_manual" placeholder="고정수가 있으면 입력하세요.(숫자와 콤마만 등록-콤마구분)" />
+            <button type="button" class="btn btn-secondary w80 reset" data-input-name="include_manual">Reset</button>
+          </div>
+          <div>
+            <button type="button" class="btn btn-outline-secondary btn-sm auto-negative">제외수 자동</button>
+            <input type="text" class="form-control negative_manual" placeholder="제외수가 있으면 입력하세요.(숫자와 콤마만 등록-콤마구분)" />
+            <button type="button" class="btn btn-secondary w80 reset" data-input-name="negative_manual">Reset</button>
+          </div>
         </div>
         <hr />
         <section>

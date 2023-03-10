@@ -100,12 +100,12 @@ String.prototype.zf = function(len){return "0".string(len - this.length) + this;
 Number.prototype.zf = function(len){return this.toString().zf(len);};
 /**
  * 로컬 파일 읽어오기
- * lottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
+ * getLottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
  * @param {파일경로} file 
  * @param {출력할 리스트 수} count 
  */
-const readTextFile = (file, count=10) => {
-    lottoArr = [];
+const readTextFile = (file) => {
+    let getLottoArr = [];
     let rawFile = new XMLHttpRequest();
     rawFile.open('GET', file, false);
     rawFile.onreadystatechange = function () {
@@ -127,33 +127,15 @@ const readTextFile = (file, count=10) => {
                             'bonusNo':childArr[7],
                             'round':childArr[8].replace('\r','')
                         }
-                        lottoArr.push(lottoObj);
+                        getLottoArr.push(lottoObj);
                     }
                 });
-                lottoArr.sort((a, b) => parseInt(b.round) - parseInt(a.round));     // 내림차순 정렬
-                let i=0;
-                let str = '';
-                lottoArr.forEach((data) => {
-                    if(i >= count) return false;
-                    else {
-                        let dataNum = data.no1+','+data.no2+','+data.no3+','+data.no4+','+data.no5+','+data.no6;
-                        str += '<tr>';
-                        str += '<td class="tCenter">'+data.round+'</td>';
-                        str += '<td class="tCenter cp" data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="getNum" data-get-num="'+dataNum+'">';
-                        str += dataNum;
-                        str += '</td>';
-                        str += '<td class="tCenter">'+data.bonusNo+'</td>';
-                        str += '<td class="tCenter">'+data.date+'</td>';
-                        str += '</tr>';
-                    }
-                    i++;
-                });
-                const extractionBody = document.querySelectorAll('.before_number_area tbody')[0];
-                extractionBody.innerHTML = str;
+                getLottoArr.sort((a, b) => parseInt(b.round) - parseInt(a.round));     // 내림차순 정렬
             }
         }
     }
     rawFile.send(null);
+    return getLottoArr;
 }
 /**
  * API로 로또번호 가져오기 - drwNo:회차
@@ -162,7 +144,7 @@ const readTextFile = (file, count=10) => {
 const getAPILottoNumber = (drwNo) => {
     try {
         const url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='+drwNo;
-        const headers = new Headers({ /*'Content-Type': 'text/xml'*/ });
+        const headers = new Headers({ /*"Content-Type": "application/json"*/ });
         const getData = (url) => fetch(url, { headers });
         getData(url).then(resp => {
             if(resp.ok) return resp.json();

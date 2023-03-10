@@ -1,21 +1,20 @@
 const decimalArr = [2,3,5,7,11,13,17,19,23,29,31,37,41,43];
 const compositeNumberArr = [1,4,8,10,14,16,20,22,25,26,28,32,34,35,38,40,44];
 const sosabhap = [3,6,9,12,15,18,21,24,27,30,33,36,39,42,45];
+const sos5abhap = [5,10,15,20,25,30,35,40,45];
 const pass = 'MTIzNA==';
-const lottoListFilePath = 'L2RhdGEvbG90dG9MaXN0LnR4dA==';
-let lottoArr = [];
+const lottoArr = readTextFile(atob('L2RhdGEvbG90dG9MaXN0LnR4dA=='));
 let lottoList = [];
 let negativeNumber = [];
 let negativeManualNumber = [];
 let includeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
-    const isGetLocalLotto = true;          // data/저장된 로또번호 읽어오기 여부
-    (isGetLocalLotto) ? readTextFile(atob(lottoListFilePath), 10) : null;
+    drawTextFile();
     const extCount = document.querySelectorAll('.ext-count');
     extCount.forEach((data) => {
         data.addEventListener('click', () => {
             const extCountCheckVal = document.querySelector('.ext-count:checked').value;
-            readTextFile(atob(lottoListFilePath), parseInt(extCountCheckVal));
+            drawTextFile(parseInt(extCountCheckVal));
         });
     });
     negativeManualNumberExt();      // 메뉴얼 제외수 초기화
@@ -74,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let titleStr = '';
         let titleStrs = '';
         let dataNum = '';
+        let dataRound = null;
         (type === 'getNum' || type === 'setNum') ? (
             type === 'setNum' ? (
                 titleStr = '최근 출현회차',
@@ -82,10 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
             ) : type === 'getNum' ? (
                 titleStr = '당첨번호',
                 dataNum = e.relatedTarget.getAttribute('data-get-num'),
+                dataRound = e.relatedTarget.getAttribute('data-round'),
                 mode = 'get'
             ) : '',
             titleStrs = titleStr + ' 정보',
-            str = setDataNum(mode, dataNum, titleStr)
+            str = setDataNum(mode, dataNum, titleStr, dataRound)
         ) : (
             type === 'dec' ? (
                 titleStrs = '소수',
@@ -99,6 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 titleStrs = '3의 배수',
                 str = '<p><1~3개 포함 추천></p>',
                 str += '<p>'+sosabhap.toString()+'</p>'
+            ) : type === 'sos5' ? (
+                titleStrs = '5의 배수',
+                str = '<p><0~2개 포함 추천></p>',
+                str += '<p>'+sos5abhap.toString()+'</p>'
             ) : '',
             titleStrs += ' 목록'
         );
@@ -139,6 +144,23 @@ document.addEventListener('DOMContentLoaded', () => {
         inputName === 'negative_manual' ? negativeManualNumber = [] : null;
         document.querySelector('.'+inputName).value = '';
     }));
+    const autoNegative = document.querySelector('.auto-negative');
+    autoNegative.addEventListener('click', () => {
+        let recomNegativeNumber = [];
+        let lastWinNumber = lottoArr[0];
+        recomNegativeNumber.push(parseInt(lastWinNumber.bonusNo));
+        recomNegativeNumber.push(parseInt(lastWinNumber.no4) + 1);
+        recomNegativeNumber.push(parseInt(lastWinNumber.no2));
+        recomNegativeNumber.push(parseInt(lastWinNumber.no2) + 1);
+        recomNegativeNumber.push(parseInt(lastWinNumber.no3));
+        recomNegativeNumber.push(parseInt(lastWinNumber.no1) + 2);
+        recomNegativeNumber.push(parseInt(lastWinNumber.no5) - 1);
+        recomNegativeNumber.push(Math.abs(parseInt(lastWinNumber.bonusNo) - parseInt(lastWinNumber.no6)));
+        recomNegativeNumber.push(parseInt(lastWinNumber.no5) - parseInt(lastWinNumber.no3));
+        recomNegativeNumber.sort((a,b) => { return a - b; });
+        document.querySelector('.negative_manual').value = recomNegativeNumber.toString();
+        negativeManualNumberExt();
+    });
 });
 /**
  * 사용자 제외수 - 설정값이 나오면 번호 재추출
@@ -191,9 +213,7 @@ const lottoExt = () => {
         includeManualNumber.length > 0 ? includeManualNumber.length <= 6 ? lotto = [...includeManualNumber] : lotto = setRandomNumber('inc', incLotto) : null;
         // 고정수가 6건 미만일때 1~45중 랜덤수 뽑아 lotto배열에 저장
         includeManualNumber.length <= 6 ? lotto = setRandomNumber('def', lotto) : null;
-        lotto.sort(function(a,b) {
-            return a - b;
-        });
+        lotto.sort((a,b) => { return a - b; });
         lottoList.push(lotto);
     }
     let lottoStr = '';
@@ -207,6 +227,7 @@ const lottoExt = () => {
                 (decimalArr.indexOf(tnum) > -1) ? suType = 'dec' : null;
                 (compositeNumberArr.indexOf(tnum) > -1) ? suType = 'com' : null;
                 (sosabhap.indexOf(tnum) > -1) ? suType = 'sos' : null;
+                (sos5abhap.indexOf(tnum) > -1) ? suType = 'sos5' : null;
                 data += '<span';
                 (suType.trim() != '') ? data += ' class="'+suType+'"' : null;
                 data += '>'+tnum+'</span>';
@@ -219,9 +240,10 @@ const lottoExt = () => {
     }
     lottoStr += '<div class="number-color-info">';
     lottoStr += '<ul>';
-    lottoStr += '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="dec"><i class="bi bi-circle-fill" style="color:#ca520c;"></i> 소수</li>';
-    lottoStr += '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="com"><i class="bi bi-circle-fill" style="color:#9d3eaa;"></i> 반복수</li>';
-    lottoStr += '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="sos"><i class="bi bi-circle-fill" style="color:#439cbe;"></i> 3의 배수</li>';
+    lottoStr += '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="dec"><i class="bi bi-circle-fill dec"></i> 소수</li>';
+    lottoStr += '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="com"><i class="bi bi-circle-fill com"></i> 반복수</li>';
+    lottoStr += '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="sos"><i class="bi bi-circle-fill sos"></i> 3의 배수</li>';
+    lottoStr += '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="sos5"><i class="bi bi-circle-fill sos5"></i> 5의 배수</li>';
     lottoStr += '</ul>';
     lottoStr += '</div>';
     document.querySelector('.extraction_area').innerHTML = lottoStr;
@@ -245,6 +267,27 @@ const setRandomNumber = (mode, arr) => {
     }
     return arr;
 }
+const drawTextFile = (count=10) => {
+    let i=0;
+    let str = '';
+    lottoArr.forEach((data) => {
+        if(i >= count) return false;
+        else {
+            let dataNum = data.no1+','+data.no2+','+data.no3+','+data.no4+','+data.no5+','+data.no6;
+            str += '<tr>';
+            str += '<td class="tCenter">'+data.round+'</td>';
+            str += '<td class="tCenter cp" data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="getNum" data-get-num="'+dataNum+'" data-round="'+data.round+'">';
+            str += dataNum;
+            str += '</td>';
+            str += '<td class="tCenter">'+data.bonusNo+'</td>';
+            str += '<td class="tCenter">'+data.date+'</td>';
+            str += '</tr>';
+        }
+        i++;
+    });
+    const extractionBody = document.querySelectorAll('.before_number_area tbody')[0];
+    extractionBody.innerHTML = str;
+}
 /**
  * 지난 당첨번호/추출번호의 정보를 레이어에 출력
  * @param {당첨/추출 여부} mode 
@@ -252,13 +295,17 @@ const setRandomNumber = (mode, arr) => {
  * @param {레이어 타이틀} title 
  * @returns String
  */
-const setDataNum = (mode, data, title='번호') => {
+const setDataNum = (mode, data, title='번호', dataRound=null) => {
+    // console.log('Arr', lottoArr);
+    // console.log('data', data);
+    // console.log('dataRound', dataRound);
     let viewCnt = parseInt(document.querySelector('.ext-count:checked').value);
     let checkDataArr = lottoArr.slice(0,viewCnt);
     let str = '';
     let decimalArrText = [];
     let compositeNumberArrText = [];
     let sosabhapText = [];
+    let sos5abhapText = [];
     let checkRoundArr = [];
     let checkRoundObj = {};
     let tempData = data.split(',');
@@ -268,6 +315,7 @@ const setDataNum = (mode, data, title='번호') => {
             decimalArr.indexOf(parseInt(res)) > -1 ? decimalArrText.push(res) : null;
             compositeNumberArr.indexOf(parseInt(res)) > -1 ? compositeNumberArrText.push(res) : null;
             sosabhap.indexOf(parseInt(res)) > -1 ? sosabhapText.push(res) : null;
+            sos5abhap.indexOf(parseInt(res)) > -1 ? sos5abhapText.push(res) : null;
             let chkSetData = '';
             checkDataArr.forEach((chkData) => {
                 let checkTempArr = [chkData.round.toString(), chkData.no1.toString(), chkData.no2.toString(), chkData.no3.toString(), chkData.no4.toString(), chkData.no5.toString(), chkData.no6.toString()];                
@@ -310,7 +358,8 @@ const setDataNum = (mode, data, title='번호') => {
     str += '<p class="card-text">';
     decimalArrText.length > 0 ? str += '소수('+decimalArrText.length+') : ' + decimalArrText.toString() + '<br>' : null;
     compositeNumberArrText.length > 0 ? str += '반복수('+compositeNumberArrText.length+') : ' + compositeNumberArrText.toString() + '<br>' : null;
-    sosabhapText.length > 0 ? str += '3의 배수('+sosabhapText.length+') : ' + sosabhapText.toString() : null;
+    sosabhapText.length > 0 ? str += '3의 배수('+sosabhapText.length+') : ' + sosabhapText.toString() + '<br>' : null;
+    sos5abhapText.length > 0 ? str += '5의 배수('+sos5abhapText.length+') : ' + sos5abhapText.toString() : null;
     str += '</p>';
     str += '</div>';
     str += '</div>';
