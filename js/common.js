@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     numberInfoModal.addEventListener('show.bs.modal', (e) => {
         let type = e.relatedTarget.getAttribute('data-type');
         const modalSizeClass = document.querySelector('#numberInfoModal .modal-dialog');
-        type === 'setNum' ? (
+        type === 'setNum' || type === 'getNum' ? (
             modalSizeClass.classList.remove('modal-md'),
             modalSizeClass.classList.add('modal-lg')
         ) : (
@@ -146,18 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
     const autoNegative = document.querySelector('.auto-negative');
     autoNegative.addEventListener('click', () => {
-        let recomNegativeNumber = [];
         let lastWinNumber = lottoArr[0];
-        recomNegativeNumber.push(parseInt(lastWinNumber.bonusNo));
-        recomNegativeNumber.push(parseInt(lastWinNumber.no4) + 1);
-        recomNegativeNumber.push(parseInt(lastWinNumber.no2));
-        recomNegativeNumber.push(parseInt(lastWinNumber.no2) + 1);
-        recomNegativeNumber.push(parseInt(lastWinNumber.no3));
-        recomNegativeNumber.push(parseInt(lastWinNumber.no1) + 2);
-        recomNegativeNumber.push(parseInt(lastWinNumber.no5) - 1);
-        recomNegativeNumber.push(Math.abs(parseInt(lastWinNumber.bonusNo) - parseInt(lastWinNumber.no6)));
-        recomNegativeNumber.push(parseInt(lastWinNumber.no5) - parseInt(lastWinNumber.no3));
-        recomNegativeNumber.sort((a,b) => { return a - b; });
+        let recomNegativeNumber = recomNegativeNumberType1(lastWinNumber);
         document.querySelector('.negative_manual').value = recomNegativeNumber.toString();
         negativeManualNumberExt();
     });
@@ -299,6 +289,12 @@ const setDataNum = (mode, data, title='번호', dataRound=null) => {
     // console.log('Arr', lottoArr);
     // console.log('data', data);
     // console.log('dataRound', dataRound);
+    let setPastRecomNegativeNumber = null;
+    if(dataRound) {
+        let findRound = dataRound - 1;
+        let wkRes = lottoArr.find( ({round}) => parseInt(round) === parseInt(findRound));
+        setPastRecomNegativeNumber = recomNegativeNumberType1(wkRes);
+    }
     let viewCnt = parseInt(document.querySelector('.ext-count:checked').value);
     let checkDataArr = lottoArr.slice(0,viewCnt);
     let str = '';
@@ -335,6 +331,7 @@ const setDataNum = (mode, data, title='번호', dataRound=null) => {
     str += '<h5 class="card-title">'+title+'</h5>';
     str += '<p class="card-text">';
     str += data;
+    if(setPastRecomNegativeNumber) str += '<br><br>자동제외수 : ' + setPastRecomNegativeNumber;
     str += '</p>';
     str += '</div>';
     if(mode === 'set') {

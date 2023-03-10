@@ -174,3 +174,22 @@ const getAPILottoNumber = (drwNo) => {
         console.log('error');
     }
 }
+/**
+ * 추천 제외수 생성 형식 1
+ * @param {array} arr 
+ * @returns 
+ */
+const recomNegativeNumberType1 = (arr) => {
+    let recomNegativeNumber = [];
+    recomNegativeNumber.push(parseInt(arr.bonusNo));
+    recomNegativeNumber.push(parseInt(arr.no4) + 1);
+    recomNegativeNumber.push(parseInt(arr.no2));
+    recomNegativeNumber.push(parseInt(arr.no2) + 1);
+    recomNegativeNumber.push(parseInt(arr.no3));
+    recomNegativeNumber.push(parseInt(arr.no1) + 2);
+    recomNegativeNumber.push(parseInt(arr.no5) - 1);
+    recomNegativeNumber.push(Math.abs(parseInt(arr.bonusNo) - parseInt(arr.no6)));
+    recomNegativeNumber.push(parseInt(arr.no5) - parseInt(arr.no3));
+    recomNegativeNumber.sort((a,b) => { return a - b; });
+    return [...new Set(recomNegativeNumber)];
+}
