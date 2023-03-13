@@ -181,6 +181,42 @@ const getAPILottoNumber = (drwNo) => {
  */
 const recomNegativeNumberType1 = (arr) => {
     let recomNegativeNumber = [];
+    // S : 이전 4주동안 2번이상 재출현할 확율은 낮다
+    let recent4WList = [];
+    let cnt = 0;
+    (parseInt(arr.round) === parseInt(lottoArr[0].round)) ? (
+        lottoArr.forEach( (data, index) => {
+            index < 4 ? (
+                recent4WList.push(data.no1),
+                recent4WList.push(data.no2),
+                recent4WList.push(data.no3),
+                recent4WList.push(data.no4),
+                recent4WList.push(data.no5),
+                recent4WList.push(data.no6)
+            ) : null;
+        })
+     ) : (
+        // 이전 회차 산출된 제외수 확인
+        lottoArr.forEach( (data) => {
+            if(parseInt(data.round) <= parseInt(arr.round)) {
+                cnt < 4 ? (
+                    recent4WList.push(data.no1),
+                    recent4WList.push(data.no2),
+                    recent4WList.push(data.no3),
+                    recent4WList.push(data.no4),
+                    recent4WList.push(data.no5),
+                    recent4WList.push(data.no6),
+                    cnt++
+                ) : null;
+            }
+        })
+    )
+    const result = recent4WList.reduce((accu, curr) => { 
+        if((accu[curr] || 0)+1 > 2) recomNegativeNumber.push(parseInt(curr));
+        accu[curr] = (accu[curr] || 0)+1; 
+        return accu;
+    }, {});
+    // E : 이전 4주동안 2번이상 재출현할 확율은 낮다
     recomNegativeNumber.push(parseInt(arr.bonusNo));
     recomNegativeNumber.push(parseInt(arr.no4) + 1);
     recomNegativeNumber.push(parseInt(arr.no2));
