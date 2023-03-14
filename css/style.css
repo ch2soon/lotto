@@ -13,11 +13,11 @@ b, strong { font-weight:900; }
 ul, ol { list-style:none; margin:0px; padding:0px; /*max-width:300px;*/ width:100%; }
 ul li, ol li { margin-bottom:5px; border-bottom:1px solid #efefef; /*font-size:12px;*/ }
 ul li:before, ol li:before { content:""; display:inline-block; vertical-align:middle; padding:0px 5px 6px 0px; }
-input::placeholder { color:#ccc !important; font-weight:200; }
-input::-webkit-input-placeholder { color:#ccc !important; font-weight:200; }
-input:-ms-input-placeholder { color:#ccc !important; font-weight:200; }
+input::placeholder { color:#ccc !important; font-weight:200; font-size:0.9rem; }
+input::-webkit-input-placeholder { color:#ccc !important; font-weight:200; font-size:0.9rem; }
+input:-ms-input-placeholder { color:#ccc !important; font-weight:200; font-size:0.9rem; }
 
-header > h1 { font-size:3rem; text-align:center; margin-top:30px; font-weight:700; }
+header > h1 { font-size:3rem; text-align:center;color:#296793; text-shadow:3px 3px #c7baa8; margin:20px 0 0; font-weight:700; }
 .sub_title span { font-weight:500; }
 
 hr { margin:0.2rem 0; }
@@ -38,7 +38,7 @@ hr { margin:0.2rem 0; }
 .toggle_option > div > button { vertical-align:unset; }
 
 .toggle_option > input { margin:2px 0; }
-.toggle_option > p { color:#ccc;font-weight:200; }
+.toggle_option > p { color:#ccc;font-weight:200;font-size:0.9rem; }
 
 .section_area { display:flex; flex-direction:row; }
 .section_area > div { width:50%;margin-top:30px; }
@@ -59,6 +59,8 @@ hr { margin:0.2rem 0; }
 
 .number-color-info > ul { display:flex; margin:10px auto; width:fit-content; }
 .number-color-info > ul > li { cursor:pointer; margin-bottom:0; padding:0 3px; border-bottom:inherit; }
+.abs-hint { text-align:right; margin-bottom:20px; }
+.abs-hint > p { color:#288dd5; font-weight:300; }
 
 #getApiModal .drwNo { display:inline-block; width:80px; padding:0.275rem 0.75rem; margin:0 5px 0 10px; }
 #getApiModal button { margin-bottom: 5px; }
@@ -68,10 +70,13 @@ hr { margin:0.2rem 0; }
 #numberInfoModal .modal-body .list-group .list-group-item > div { float:left;width:18px; }
 #numberInfoModal .modal-body .list-group .list-group-item > span { margin-left:2px; }
 
+.auto-negative::before { content:'제외수 자동'; }
+
 .w80 { width:80px }
 .w100 { width:100px }
 .tCenter { text-align:center; }
 label, .cp { cursor:pointer; }
+
 
 @media (max-width: 700px) { 
 	/* .sub_title { position:inherit; } */
@@ -81,6 +86,8 @@ label, .cp { cursor:pointer; }
 	.section_area > div { width:100%; }
 	.before_number_area th { font-size:1rem; }
 	.before_number_area td { font-size:0.9rem; }
+	.auto-negative::before { content:'A'; }
+	.toggle_option > div > input { width:60%; }
 } 
 
 @media (max-width: 575px) {
