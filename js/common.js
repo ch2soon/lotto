@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let myModal = new bootstrap.Modal(document.getElementById('getApiModal'), {
         backdrop: 'static',
         keyboard: false,
-        focus: false,
+        focus: false
     });
     document.querySelector('.getAPILottoNumber').addEventListener('click', () => {
         const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             inputName === 'include_manual' ? (includeManualNumber = []) : null;
             inputName === 'negative_manual' ? (negativeManualNumber = []) : null;
             document.querySelector('.' + inputName).value = '';
-        }),
+        })
     );
     const autoNegative = document.querySelector('.auto-negative');
     autoNegative.addEventListener('click', () => {
@@ -313,7 +313,7 @@ const setDataNum = (mode, data, title = '번호', dataRound = null) => {
                     chkData.no3.toString(),
                     chkData.no4.toString(),
                     chkData.no5.toString(),
-                    chkData.no6.toString(),
+                    chkData.no6.toString()
                 ];
                 if (checkTempArr.indexOf(res.toString()) > -1) {
                     chkSetData.trim() !== '' ? (chkSetData = chkSetData + ',') : null;
