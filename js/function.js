@@ -165,6 +165,7 @@ const getAPILottoNumber = drwNo => {
     try {
         const url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=' + drwNo;
         const headers = new Headers({
+            // 'access-control-allow-origin': '*'
             /*"Content-Type": "application/json"*/
         });
         const getData = url => fetch(url, { headers });
