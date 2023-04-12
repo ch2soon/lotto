@@ -292,7 +292,7 @@ const recomNegativeNumberType1 = arr => {
     return [...new Set(recomNegativeNumber)];
 };
 /**
- * AC값 추출 공식 : 묶음수-(개수-1) 
+ * AC값 추출 공식 : 묶음수-(개수-1)
  * @param {비교배열} arr
  * @returns ac
  */
@@ -300,7 +300,7 @@ const getACValue = arr => {
     let varArr = new Array();
     arr.forEach((data, index) => {
         arr.forEach((sdata, sindex) => {
-            (index != sindex && index < sindex) ? varArr.push(Number(sdata) - Number(data)) : null;
+            index != sindex && index < sindex ? varArr.push(Number(sdata) - Number(data)) : null;
         });
     });
     let setArr = varArr.filter((v, i) => varArr.indexOf(v) === i);
@@ -317,4 +317,33 @@ const getTotalSum = arr => {
         return sum + currValue;
     }, 0);
     return total;
+};
+/**
+ * 배열 끝수 총합
+ * @param {비교배열} arr
+ * @returns ac
+ */
+const getLastNumSum = tarr => {
+    let arr = new Array();
+    tarr.forEach(data => {
+        arr.push(calculate(data));
+    });
+    const total = arr.reduce(function add(sum, currValue) {
+        return sum + currValue;
+    }, 0);
+    return total;
+};
+/**
+ * 일의자리수 구하기
+ * @param {int} num
+ * @returns
+ */
+const calculate = num => {
+    let result;
+    if (num < 10) result = num;
+    let str = String(num);
+    for (let i = 1; i < str.length + 1; i = i * 10) {
+        if (num >= 10 * i) result = ((num % 10) * i - (num % i)) / i;
+        return result;
+    }
 };

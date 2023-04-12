@@ -211,7 +211,7 @@ const lottoExt = () => {
                 attrData +
                 '">' +
                 data + 
-                '<span class="font08">('+getACValue(acArr)+','+getTotalSum(acArr)+')</span>' +
+                '<span class="font08">('+getACValue(acArr)+','+getLastNumSum(acArr)+','+getTotalSum(acArr)+')</span>' +
                 '</li>';
         });
         lottoStr += '</ul>';
@@ -264,7 +264,7 @@ const drawTextFile = (count = 10) => {
                 data.round +
                 '">';
             str += dataNum;
-            str += '<span class="font08">('+getACValue(acArr)+','+getTotalSum(acArr)+')</span>';
+            str += '<span class="font08">('+getACValue(acArr)+','+getLastNumSum(acArr)+','+getTotalSum(acArr)+')</span>';
             str += '</td>';
             str += '<td class="tCenter">' + data.bonusNo + '</td>';
             str += '<td class="tCenter">' + data.date + '</td>';
