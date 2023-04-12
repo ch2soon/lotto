@@ -340,10 +340,10 @@ const getLastNumSum = tarr => {
  */
 const calculate = num => {
     let result;
-    if (num < 10) result = num;
+    num < 10 ? result = num : null;
     let str = String(num);
     for (let i = 1; i < str.length + 1; i = i * 10) {
-        if (num >= 10 * i) result = ((num % 10) * i - (num % i)) / i;
+        (num >= 10 * i) ? result = ((num % 10) * i - (num % i)) / i : 0;
         return result;
     }
 };
