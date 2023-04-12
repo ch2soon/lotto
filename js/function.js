@@ -307,3 +307,14 @@ const getACValue = arr => {
     let ac = setArr.length - (arr.length - 1);
     return ac;
 };
+/**
+ * 배열 총합
+ * @param {비교배열} arr
+ * @returns ac
+ */
+const getTotalSum = arr => {
+    const total = arr.reduce(function add(sum, currValue) {
+        return sum + currValue;
+    }, 0);
+    return total;
+};
