@@ -291,3 +291,19 @@ const recomNegativeNumberType1 = arr => {
     });
     return [...new Set(recomNegativeNumber)];
 };
+/**
+ * AC값 추출 공식 : 묶음수-(개수-1) 
+ * @param {비교배열} arr
+ * @returns ac
+ */
+const getACValue = arr => {
+    let varArr = new Array();
+    arr.forEach((data, index) => {
+        arr.forEach((sdata, sindex) => {
+            (index != sindex && index < sindex) ? varArr.push(Number(sdata) - Number(data)) : null;
+        });
+    });
+    let setArr = varArr.filter((v, i) => varArr.indexOf(v) === i);
+    let ac = setArr.length - (arr.length - 1);
+    return ac;
+};
