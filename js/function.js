@@ -1,7 +1,7 @@
 /**
  * 문자열에서 콤마 제거
  * @param {String} str
- * @returns
+ * @returns string
  */
 const deleteCommas = str => {
     return str.replace(/,/g, '');
@@ -9,7 +9,7 @@ const deleteCommas = str => {
 /**
  * 숫자에 3자리마다 콤마 넣기
  * @param {int} num
- * @returns
+ * @returns string
  */
 const numberWithCommas = num => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -17,7 +17,7 @@ const numberWithCommas = num => {
 /**
  * 숫자인지 확인
  * @param {data} val
- * @returns
+ * @returns boolean
  */
 const isNumber = val => {
     let pattern = /^[0-9]*$/;
@@ -26,7 +26,7 @@ const isNumber = val => {
 /**
  * 숫자와 콤마인지 확인
  * @param {data} val
- * @returns
+ * @returns boolean
  */
 const isCommaNumber = val => {
     let pattern = /^[0-9,]*$/;
@@ -35,7 +35,7 @@ const isCommaNumber = val => {
 /**
  * 숫자만 입력
  * @param {data} str
- * @returns
+ * @returns string
  */
 const onlyNumber = str => {
     return str.replace(/[^0-9.]/g, '').replace(/(\.*)\./g, '$1');
@@ -43,7 +43,7 @@ const onlyNumber = str => {
 /**
  * 휴대폰 번호 대시/하이픈 추가
  * @param {int} str
- * @returns
+ * @returns string
  */
 const phoneWithHyphen = str => {
     return str === null ? null : str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
@@ -51,7 +51,7 @@ const phoneWithHyphen = str => {
 /**
  * 휴대폰 번호 형식 체크
  * @param {data} str
- * @returns
+ * @returns boolean
  */
 const checkPhoneNumber = str => {
     const check = /^(?:(010\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/;
@@ -71,7 +71,7 @@ const checkPhoneNumber = str => {
  * 현재년도 : 2011
  * console.log("현재년도 : " + new Date().format("yyyy"));
  * @param {date.format} f
- * @returns
+ * @returns date
  */
 Date.prototype.format = function (f) {
     if (!this.valueOf()) return ' ';
@@ -123,6 +123,7 @@ Number.prototype.zf = function (len) {
  * getLottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
  * @param {파일경로} file
  * @param {출력할 리스트 수} count
+ * @returns array
  */
 const readTextFile = file => {
     let getLottoArr = [];
@@ -214,7 +215,7 @@ const getAPILottoNumber = drwNo => {
 /**
  * 추천 제외수 생성 형식 1
  * @param {array} arr
- * @returns
+ * @returns array
  */
 const recomNegativeNumberType1 = arr => {
     let recomNegativeNumber = [];
@@ -294,7 +295,7 @@ const recomNegativeNumberType1 = arr => {
 /**
  * AC값 추출 공식 : 묶음수-(개수-1)
  * @param {비교배열} arr
- * @returns ac
+ * @returns int
  */
 const getACValue = arr => {
     let varArr = new Array();
@@ -310,7 +311,7 @@ const getACValue = arr => {
 /**
  * 배열 총합
  * @param {비교배열} arr
- * @returns ac
+ * @returns int
  */
 const getTotalSum = arr => {
     const total = arr.reduce(function add(sum, currValue) {
@@ -321,7 +322,7 @@ const getTotalSum = arr => {
 /**
  * 배열 끝수 총합
  * @param {비교배열} arr
- * @returns ac
+ * @returns int
  */
 const getLastNumSum = tarr => {
     let arr = new Array();
@@ -336,7 +337,7 @@ const getLastNumSum = tarr => {
 /**
  * 일의자리수 구하기
  * @param {int} num
- * @returns
+ * @returns int
  */
 const calculate = num => {
     let result;

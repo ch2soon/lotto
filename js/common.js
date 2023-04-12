@@ -234,7 +234,7 @@ const lottoExt = () => {
  * 고정수/랜덤 뽑기 함수화
  * @param {고정수/랜덤} mode
  * @param {array} arr
- * @returns
+ * @returns array
  */
 const setRandomNumber = (mode, arr) => {
     while (arr.length < 6) {
