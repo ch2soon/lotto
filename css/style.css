@@ -82,6 +82,7 @@ hr { margin:0.2rem 0; }
 
 .w80 { width:80px }
 .w100 { width:100px }
+.mw80 { min-width:80px }
 .tCenter { text-align:center; }
 .font08 { font-size: 0.8rem;}
 label, .cp { cursor:pointer; }

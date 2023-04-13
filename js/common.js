@@ -211,7 +211,7 @@ const lottoExt = () => {
                 attrData +
                 '">' +
                 data + 
-                '<span class="font08">('+getACValue(acArr)+','+getLastNumSum(acArr)+','+getTotalSum(acArr)+')</span>' +
+                '<span class="mw80 font08">('+getACValue(acArr)+','+getLastNumSum(acArr)+','+getTotalSum(acArr)+')</span>' +
                 '</li>';
         });
         lottoStr += '</ul>';
@@ -286,6 +286,7 @@ const setDataNum = (mode, data, title = '번호', dataRound = null) => {
     // console.log('Arr', lottoArr);
     // console.log('data', data);
     // console.log('dataRound', dataRound);
+    let acArr = new Array();
     let setPastRecomNegativeNumber = null;
     if (dataRound) {
         let findRound = dataRound - 1;
@@ -304,6 +305,7 @@ const setDataNum = (mode, data, title = '번호', dataRound = null) => {
     let tempData = data.split(',');
     if (tempData.length > 0) {
         tempData.forEach((res, index) => {
+            acArr.push(parseInt(res));
             checkRoundObj = { no: tempData[index], round: null };
             decimalArr.indexOf(parseInt(res)) > -1 ? decimalArrText.push(res) : null;
             compositeNumberArr.indexOf(parseInt(res)) > -1 ? compositeNumberArrText.push(res) : null;
@@ -358,12 +360,17 @@ const setDataNum = (mode, data, title = '번호', dataRound = null) => {
     str += '<div class="card-body">';
     str += '<h5 class="card-title">참고수 정보</h5>';
     str += '<p class="card-text">';
-    decimalArrText.length > 0 ? (str += '소수(' + decimalArrText.length + ') : ' + decimalArrText.toString() + '<br>') : null;
+    str += '<ul>';
+    decimalArrText.length > 0 ? (str += '<li>소수(' + decimalArrText.length + ') : ' + decimalArrText.toString() + '</li>') : null;
     compositeNumberArrText.length > 0
-        ? (str += '반복수(' + compositeNumberArrText.length + ') : ' + compositeNumberArrText.toString() + '<br>')
+        ? (str += '<li>반복수(' + compositeNumberArrText.length + ') : ' + compositeNumberArrText.toString() + '</li>')
         : null;
-    sosabhapText.length > 0 ? (str += '3의 배수(' + sosabhapText.length + ') : ' + sosabhapText.toString() + '<br>') : null;
-    sos5abhapText.length > 0 ? (str += '5의 배수(' + sos5abhapText.length + ') : ' + sos5abhapText.toString()) : null;
+    sosabhapText.length > 0 ? (str += '<li>3의 배수(' + sosabhapText.length + ') : ' + sosabhapText.toString() + '</li>') : null;
+    sos5abhapText.length > 0 ? (str += '<li>5의 배수(' + sos5abhapText.length + ') : ' + sos5abhapText.toString() + '</li>') : null;
+    str += '<li>AC값 : ' + getACValue(acArr) + '</li>';
+    str += '<li>끝수의 총합 : ' + getLastNumSum(acArr) + '</li>';
+    str += '<li>총합 : ' + getTotalSum(acArr) + '</li>';
+    str += '</ul>';
     str += '</p>';
     str += '</div>';
     str += '</div>';
