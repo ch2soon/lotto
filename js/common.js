@@ -189,7 +189,7 @@ const lottoExt = () => {
     let lottoStr = '';
     if (lottoList.length > 0) {
         lottoStr += '<ul>';
-        lottoList.forEach(res => {            
+        lottoList.forEach(res => {
             let data = '';
             let attrData = '';
             let acArr = [];
@@ -210,8 +210,14 @@ const lottoExt = () => {
                 '<li class="cp" data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="setNum" data-set-num="' +
                 attrData +
                 '">' +
-                data + 
-                '<span class="mw80 font08">('+getACValue(acArr)+','+getLastNumSum(acArr)+','+getTotalSum(acArr)+')</span>' +
+                data +
+                '<span class="mw80 font08">(' +
+                getACValue(acArr) +
+                ',' +
+                getLastNumSum(acArr) +
+                ',' +
+                getTotalSum(acArr) +
+                ')</span>' +
                 '</li>';
         });
         lottoStr += '</ul>';
@@ -253,7 +259,14 @@ const drawTextFile = (count = 10) => {
     lottoArr.forEach(data => {
         if (i >= count) return false;
         else {
-            let acArr = [parseInt(data.no1), parseInt(data.no2), parseInt(data.no3), parseInt(data.no4), parseInt(data.no5), parseInt(data.no6)];
+            let acArr = [
+                parseInt(data.no1),
+                parseInt(data.no2),
+                parseInt(data.no3),
+                parseInt(data.no4),
+                parseInt(data.no5),
+                parseInt(data.no6)
+            ];
             let dataNum = data.no1 + ',' + data.no2 + ',' + data.no3 + ',' + data.no4 + ',' + data.no5 + ',' + data.no6;
             str += '<tr>';
             str += '<td class="tCenter">' + data.round + '</td>';
@@ -264,7 +277,7 @@ const drawTextFile = (count = 10) => {
                 data.round +
                 '">';
             str += dataNum;
-            str += '<span class="font08">('+getACValue(acArr)+','+getLastNumSum(acArr)+','+getTotalSum(acArr)+')</span>';
+            str += '<span class="font08">(' + getACValue(acArr) + ',' + getLastNumSum(acArr) + ',' + getTotalSum(acArr) + ')</span>';
             str += '</td>';
             str += '<td class="tCenter">' + data.bonusNo + '</td>';
             str += '<td class="tCenter">' + data.date + '</td>';
