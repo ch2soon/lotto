@@ -9,26 +9,29 @@ let negativeNumber = [];
 let negativeManualNumber = [];
 let includeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
-    const note_template = note_data.data;
-    let noteStr = '';
-    note_template.forEach((data, index) => {
-        noteStr += '<p class="section-mark">' + (parseInt(index)+1) + '. ' + data.title + '</p>';
-        if(data.content.trim() !== "") noteStr += '<p>' + data.content.replaceAll('\r\n', '<br>') + '</p>';
-        if(data.img1_path.trim() !== "") {
-            noteStr += '<div class="note-img">';
-            noteStr += '<img src="'+data.img1_path+'">';
-            if(data.img1_description.trim() !== "") noteStr += '<span>'+data.img1_description+'</span>';
-            noteStr += '</div>';
-        }
-        if(data.img2_path.trim() !== "") {
-            noteStr += '<div class="note-img">';
-            noteStr += '<img src="'+data.img2_path+'">';
-            if(data.img2_description.trim() !== "") noteStr += '<span>'+data.img2_description+'</span>';
-            noteStr += '</div>';
-        }
-        if(data.comment.trim() !== "") noteStr += '<p>' + data.comment.replaceAll('\r\n', '<br>') + '</p>';
+    fetch("/template/note.json")
+    .then((response) => response.json())
+    .then((json) => {
+        let noteStr = '';
+        json.forEach((data, index) => {
+            noteStr += '<p class="section-mark">' + (parseInt(index)+1) + '. ' + data.title + '</p>';
+            if(data.content.trim() !== "") noteStr += '<p>' + data.content.replaceAll('\r\n', '<br>') + '</p>';
+            if(data.img1_path.trim() !== "") {
+                noteStr += '<div class="note-img">';
+                noteStr += '<img src="'+data.img1_path+'">';
+                if(data.img1_description.trim() !== "") noteStr += '<span>'+data.img1_description+'</span>';
+                noteStr += '</div>';
+            }
+            if(data.img2_path.trim() !== "") {
+                noteStr += '<div class="note-img">';
+                noteStr += '<img src="'+data.img2_path+'">';
+                if(data.img2_description.trim() !== "") noteStr += '<span>'+data.img2_description+'</span>';
+                noteStr += '</div>';
+            }
+            if(data.comment.trim() !== "") noteStr += '<p>' + data.comment.replaceAll('\r\n', '<br>') + '</p>';
+        });
+        document.querySelector('.note').innerHTML = noteStr;
     });
-    document.querySelector('.note').innerHTML = noteStr;
     drawTextFile();
     const extCount = document.querySelectorAll('.ext-count');
     extCount.forEach(data => {
