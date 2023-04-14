@@ -265,19 +265,17 @@ const drawNoteTemplateFile = () => {
             json.forEach((data, index) => {
                 noteStr += '<p class="section-mark">' + (parseInt(index) + 1) + '. ' + data.title + '</p>';
                 data.content.trim() !== '' ? (noteStr += '<p>' + data.content.replaceAll('\r\n', '<br>') + '</p>') : '';
-                if (data.img1_path.trim() !== '') {
-                    noteStr += '<div class="note-img">';
-                    noteStr += '<img src="' + data.img1_path + '">';
-                    if (data.img1_description.trim() !== '') noteStr += '<span>' + data.img1_description + '</span>';
-                    noteStr += '</div>';
-                }
-                if (data.img2_path.trim() !== '') {
-                    noteStr += '<div class="note-img">';
-                    noteStr += '<img src="' + data.img2_path + '">';
-                    if (data.img2_description.trim() !== '') noteStr += '<span>' + data.img2_description + '</span>';
-                    noteStr += '</div>';
-                }
-                if (data.comment.trim() !== '') noteStr += '<p>' + data.comment.replaceAll('\r\n', '<br>') + '</p>';
+                data.img1_path.trim() !== ''
+                    ? ((noteStr += '<div class="note-img"><img src="' + data.img1_path + '">'),
+                      data.img1_description.trim() !== '' ? (noteStr += '<span>' + data.img1_description + '</span>') : '',
+                      (noteStr += '</div>'))
+                    : '';
+                data.img2_path.trim() !== ''
+                    ? ((noteStr += '<div class="note-img"><img src="' + data.img2_path + '">'),
+                      data.img2_description.trim() !== '' ? (noteStr += '<span>' + data.img2_description + '</span>') : '',
+                      (noteStr += '</div>'))
+                    : '';
+                data.comment.trim() !== '' ? (noteStr += '<p>' + data.comment.replaceAll('\r\n', '<br>') + '</p>') : '';
             });
             document.querySelector('.note').innerHTML = noteStr;
         });
