@@ -129,7 +129,7 @@
         "title" : "모서리패턴",
         "content" : "모서리 패턴은 로또용지를 보았을때 좌측 상단, 우측 상단, 좌측 하단, 우측 하단에 포함된 수를 말합니다.\r\n좌측상단 : 1,2,8,9\r\n우측상단 : 6,7,13,14\r\n좌측하단 : 29,30,36,37\r\n우측하단 : 34,35,41,42\r\n역대 로또 1등 당첨번호 중 모서리수가 1개~4개 포함된경우 90%이상 출현하기에 1개~4개를 포함하여 조합하는것을 추천합니다.",
         "img1_description" : "모서리패턴",
-        "img1_path" : "/img/pt_1.png",
+        "img1_path" : "/template/img/pt_1.png",
         "img2_description" : "",
         "img2_path" : "",
         "comment" : ""
@@ -138,16 +138,16 @@
         "title" : "삼각패턴",
         "content" : "삼각패턴은 아래 참조 이미지처럼 4개 패턴이 존재합니다.",
         "img1_description" : "삼각패턴1",
-        "img1_path" : "/img/pt_2.png",
+        "img1_path" : "/template/img/pt_2.png",
         "img2_description" : "삼각패턴2",
-        "img2_path" : "/img/pt_3.png",
+        "img2_path" : "/template/img/pt_3.png",
         "comment" : "위 4가지 삼각패턴 이미지를 보면 빨간색 테두리안에 6개번호를 모두 마킹하는 경우, 역대 로또 1등 당첨번호 통계상 5% 미만으로 출현 확률이 매우 적기에 6개 번호를 모두 마킹하는것을 추천하지 않습니다."
     },
     {
         "title" : "개구리패턴",
         "content" : "",
         "img1_description" : "개구리패턴",
-        "img1_path" : "/img/pt_4.png",
+        "img1_path" : "/template/img/pt_4.png",
         "img2_description" : "",
         "img2_path" : "",
         "comment" : "위 개구리패턴 이미지를 보면 빨간색으로 표기된 부분에 로또번호 6개를 모두 마킹하는 경우, 역대 로또 1등 당첨번호 통계상 5% 미만으로 출현 확률을 가지고 있기에 6개 번호를 모두 마킹하는것을 추천하지 않습니다."
