@@ -73,7 +73,7 @@ hr { margin:0.2rem 0; }
 .auto-negative::before { content:'제외수 자동'; }
 
 .note { padding:10px 0px;font-size:0.9rem; }
-.note > p { line-height:35px;display:block;padding-left:10px; }
+.note > p { line-height:30px;display:block;padding-left:10px; }
 .note > p.section-mark { font-weight:500;padding:0px 5px; }
 .note > p.section-mark:not(:first-of-type) { margin-top:20px; }
 .note-img { padding:10px 0px; }
