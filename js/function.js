@@ -59,6 +59,17 @@ const checkPhoneNumber = str => {
     return check.test(str);
 };
 /**
+ * 6개월전 날짜
+ * @returns string
+ */
+const month6AgoDate = () => {    
+    let d = new Date();
+    let monthOfYear = d.getMonth();
+    d.setMonth(monthOfYear - 6);
+    let rtn = d.format("yyyy-MM-dd");
+    return rtn;
+}
+/**
  * Example!!
  * 2011년 09월 11일 오후 03시 45분 42초
  * console.log(new Date().format("yyyy년 MM월 dd일 a/p hh시 mm분 ss초"));

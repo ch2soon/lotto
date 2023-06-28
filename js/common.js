@@ -11,6 +11,7 @@ let includeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
     drawNoteTemplateFile();
     drawTextFile();
+    draw26WeekNumber();
     const extCount = document.querySelectorAll('.ext-count');
     extCount.forEach(data => {
         data.addEventListener('click', () => {
@@ -253,6 +254,46 @@ const setRandomNumber = (mode, arr) => {
               arr.indexOf(num) < 0 && negativeNumber.indexOf(num) < 0 && negativeManualNumber.indexOf(num) < 0 ? arr.push(num) : null);
     }
     return arr;
+};
+const draw26WeekNumber = () => {
+    let i = 0;
+    let count = 26;
+    let week26Str = '';
+    let arrData = [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0
+    ];
+    lottoArr.forEach(data => {
+        if (i >= count) return false;
+        else {
+            let acArr = [
+                parseInt(data.no1),
+                parseInt(data.no2),
+                parseInt(data.no3),
+                parseInt(data.no4),
+                parseInt(data.no5),
+                parseInt(data.no6)
+            ];
+            acArr.forEach(thisData => {
+                arrData[thisData-1] = arrData[thisData-1] + 1;
+            });
+        }
+        i++;
+    });
+    week26Str += '<tr>';
+    arrData.forEach((data, index) => {
+        if(index % 3 === 0) week26Str += '</tr><tr>';
+        let winNumber = index + 1;
+        if(data === 3) data = '<span class="win-num3-color">' + data + '</span>';
+        else if(data === 4) data = '<span class="win-num4-color">' + data + '</span>';
+        else data = '<span>' + data + '</span>';
+        week26Str += '<td>'+winNumber+'</td>';
+        week26Str += '<td>'+data+'</td>';
+    });
+    week26Str += '</tr>';
+    const week26Body = document.querySelectorAll('#week26Modal tbody')[0];
+    week26Body.innerHTML = week26Str;
 };
 /**
  * 분석공식문서 그리기

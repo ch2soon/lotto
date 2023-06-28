@@ -88,10 +88,52 @@
   </main>
   <footer>
     <div class="container d-md-flex justify-content-md-end">
+      <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#week26Modal">26주간 추이</button>&nbsp;
       <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#analyzeModal">분석공식 확인</button>&nbsp;
       <button type="button" class="btn btn-secondary btn-sm getAPILottoNumber">당첨번호 가져오기</button>
     </div>
   </footer>
+
+  <div class="modal fade" id="week26Modal" tabindex="-1" role="dialog" aria-labelledby="week26ModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">26주간 당첨번호 현황</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <colgroup>
+              <col style="width:16.6%;"/>
+              <col style="width:16.6%;"/>
+              <col style="width:16.6%;"/>
+              <col style="width:16.6%;"/>
+              <col style="width:16.6%;"/>
+              <col style="width:16.6%;"/>
+            </colgroup>
+            <thead class="table-dark">
+              <tr>
+                <th>번호</th>
+                <th>수</th>
+                <th>번호</th>
+                <th>수</th>
+                <th>번호</th>
+                <th>수</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="modal fade" id="analyzeModal" tabindex="-1" role="dialog" aria-labelledby="analyzeModalLabel"
     aria-hidden="true">

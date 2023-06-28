@@ -48,6 +48,11 @@ hr { margin:0.2rem 0; }
 .before_number_area .ext-title { flex:auto; }
 .before_number_area .ext-radio { width:9.4rem; }
 
+#week26Modal th, #week26Modal td { text-align:center; }
+#week26Modal td:nth-child(odd) { background-color: #f5f5f5; }
+.win-num3-color { color:#a33636; }
+.win-num4-color { color:#5595d7; }
+
 .extraction_area > p { text-align:center; color:#ccc; }
 .extraction_area > ul { margin:0 auto; }
 .extraction_area > ul > li { width:fit-content; margin:auto; padding:5px; }
