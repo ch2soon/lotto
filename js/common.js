@@ -256,7 +256,6 @@ const setRandomNumber = (mode, arr) => {
     return arr;
 };
 const draw26WeekNumber = () => {
-    let i = 0;
     let count = 26;
     let week26Str = '';
     let arrData = [
@@ -264,8 +263,8 @@ const draw26WeekNumber = () => {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0
     ];
-    lottoArr.forEach(data => {
-        if (i >= count) return false;
+    lottoArr.forEach((data, index) => {
+        if (index >= count) return false;
         else {
             let acArr = [
                 parseInt(data.no1),
@@ -279,15 +278,16 @@ const draw26WeekNumber = () => {
                 arrData[thisData-1] = arrData[thisData-1] + 1;
             });
         }
-        i++;
     });
     week26Str += '<tr>';
     arrData.forEach((data, index) => {
-        if(index % 3 === 0) week26Str += '</tr><tr>';
+        index % 3 === 0 ? week26Str += '</tr><tr>' : '';
         let winNumber = index + 1;
-        if(data === 3) data = '<span class="win-num3-color">' + data + '</span>';
-        else if(data === 4) data = '<span class="win-num4-color">' + data + '</span>';
-        else data = '<span>' + data + '</span>';
+        data === 3
+            ? data = '<span class="win-num3-color">' + data + '</span>'
+            : data === 4
+                ? data = '<span class="win-num4-color">' + data + '</span>'
+                : data = '<span>' + data + '</span>';
         week26Str += '<td>'+winNumber+'</td>';
         week26Str += '<td>'+data+'</td>';
     });
@@ -326,10 +326,9 @@ const drawNoteTemplateFile = () => {
  * @param {int} count
  */
 const drawTextFile = (count = 10) => {
-    let i = 0;
     let str = '';
-    lottoArr.forEach(data => {
-        if (i >= count) return false;
+    lottoArr.forEach((data, index) => {
+        if (index >= count) return false;
         else {
             let acArr = [
                 parseInt(data.no1),
@@ -355,7 +354,6 @@ const drawTextFile = (count = 10) => {
             str += '<td class="tCenter">' + data.date + '</td>';
             str += '</tr>';
         }
-        i++;
     });
     const extractionBody = document.querySelectorAll('.before_number_area tbody')[0];
     extractionBody.innerHTML = str;
