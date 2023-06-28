@@ -255,9 +255,13 @@ const setRandomNumber = (mode, arr) => {
     }
     return arr;
 };
+/**
+ * 1~45번중 26주간(약6개월) 번호별 당첨횟수 표시
+ */
 const draw26WeekNumber = () => {
     let count = 26;
     let week26Str = '';
+    let agoWin = [];
     let arrData = [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -266,6 +270,18 @@ const draw26WeekNumber = () => {
     lottoArr.forEach((data, index) => {
         if (index >= count) return false;
         else {
+            if(index < 3) {
+                let objAgo = {
+                    round : data.round,
+                    no1 : parseInt(data.no1),
+                    no2 : parseInt(data.no2),
+                    no3 : parseInt(data.no3),
+                    no4 : parseInt(data.no4),
+                    no5 : parseInt(data.no5),
+                    no6 : parseInt(data.no6)
+                }
+                agoWin.push(objAgo);            
+            }
             let acArr = [
                 parseInt(data.no1),
                 parseInt(data.no2),
@@ -281,13 +297,29 @@ const draw26WeekNumber = () => {
     });
     week26Str += '<tr>';
     arrData.forEach((data, index) => {
-        index % 3 === 0 ? week26Str += '</tr><tr>' : '';
+        let agoCheck = '';
         let winNumber = index + 1;
+        let winNumberAgoFlag = false;
+        let numberColorFlag = false;
+        agoWin.forEach((agoData, agoIndex) => {
+            if(winNumber === agoData['no1'] || winNumber === agoData['no2'] || winNumber === agoData['no3'] || winNumber === agoData['no4'] || winNumber === agoData['no5'] || winNumber === agoData['no6']) {
+                if(agoCheck !== "") agoCheck += ',';
+                agoCheck += agoIndex+1;
+                winNumberAgoFlag = true;
+            }
+        });
+        winNumberAgoFlag ? winNumber += '<span style="font-size:xx-small;margin-left:4px;">'+agoCheck+'주전</span>' : '';
+        index % 4 === 0 ? week26Str += '</tr><tr>' : '';
+        data === 0
+            ? (data = '<span class="win-num0-color">' + data + '</span>', numberColorFlag = true)
+            : '';
         data === 3
-            ? data = '<span class="win-num3-color">' + data + '</span>'
-            : data === 4
-                ? data = '<span class="win-num4-color">' + data + '</span>'
-                : data = '<span>' + data + '</span>';
+            ? (data = '<span class="win-num3-color">' + data + '</span>', numberColorFlag = true)
+            : '';
+        data === 4
+            ? (data = '<span class="win-num4-color">' + data + '</span>', numberColorFlag = true)
+            : '';
+        (!numberColorFlag) ? data = '<span>' + data + '</span>' : '';
         week26Str += '<td>'+winNumber+'</td>';
         week26Str += '<td>'+data+'</td>';
     });
