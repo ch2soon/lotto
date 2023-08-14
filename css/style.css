@@ -92,6 +92,7 @@ hr { margin:0.2rem 0; }
 .tCenter { text-align:center; }
 .font08 { font-size: 0.8rem;}
 label, .cp { cursor:pointer; }
+.tle { table-layout: fixed; }
 
 @media (max-width: 700px) { 
 	/* .sub_title { position:inherit; } */
@@ -103,8 +104,9 @@ label, .cp { cursor:pointer; }
 	.before_number_area td { font-size:0.9rem; }
 	.auto-negative::before { content:'A'; }
 	.toggle_option > div > input { width:60%; }
-} 
-
+	.abs-hint { text-align: inherit; }
+}
 @media (max-width: 575px) {
 	#numberInfoModal .modal-body > div > div:last-child { margin-top:20px; }
+	.abs-hint { text-align: inherit; }
 } 
