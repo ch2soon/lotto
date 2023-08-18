@@ -172,17 +172,29 @@ const includeManualRollback = () => {
  */
 const lottoExt = () => {
     let cnt = parseInt(document.querySelector('.extraction_cnt').value);
+    let include_mode = document.querySelector('.include_manual_area > select').value.split("_");
     for (z = 0; z < cnt; z++) {
         let lotto = [];
         let incLotto = [];
-        // 고정수가 6건 미만이면 lotto배열에 복사, 6건보다 많으면 고정수중 랜덤으로 6건 뽑아 출력
-        includeManualNumber.length > 0
-            ? includeManualNumber.length <= 6
-                ? (lotto = [...includeManualNumber])
-                : (lotto = setRandomNumber('inc', incLotto))
-            : null;
-        // 고정수가 6건 미만일때 1~45중 랜덤수 뽑아 lotto배열에 저장
-        includeManualNumber.length <= 6 ? (lotto = setRandomNumber('def', lotto)) : null;
+        if(include_mode[0] === "or") {
+            let extr_cnt = 0;
+            typeof include_mode[1] === "undefined" || includeManualNumber.length <= parseInt(include_mode[1])
+                ? extr_cnt = (Math.floor(Math.random() * includeManualNumber.length)) + 1
+                : extr_cnt = parseInt(include_mode[1]);
+            while (lotto.length < extr_cnt) {
+                let num = includeManualNumber[Math.floor(Math.random() * includeManualNumber.length)];
+                lotto.indexOf(num) < 0 ? lotto.push(num) : null;
+            }
+        } else {
+            // 고정수가 6건 미만이면 lotto배열에 복사, 6건보다 많으면 고정수중 랜덤으로 6건 뽑아 출력
+            includeManualNumber.length > 0
+                ? includeManualNumber.length <= 6
+                    ? (lotto = [...includeManualNumber])
+                    : (lotto = setRandomNumber('inc', incLotto))
+                : null;
+            // 고정수가 6건 미만일때 1~45중 랜덤수 뽑아 lotto배열에 저장
+        }
+        lotto.length <= 6 ? (lotto = setRandomNumber('def', lotto)) : null;
         lotto.sort((a, b) => {
             return a - b;
         });

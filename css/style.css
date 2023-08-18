@@ -28,6 +28,8 @@ hr { margin:0.2rem 0; }
 .ext_operation_area > select { display: inline-block !important; width:130px !important; }
 .ext_operation_area > button { vertical-align: top !important; }
 
+.include_manual_area > select { display: inline-block !important; width:103px !important; }
+
 .toggle_button_area { text-align:center; }
 .toggle_button_area > i { cursor:pointer; padding:4px 30px; text-align:center; }
 .toggle_option { display:none; margin:5px 0; text-align:right; }
