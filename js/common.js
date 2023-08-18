@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     negativeManualNumberExt(); // 메뉴얼 제외수 초기화
     includeManualNumberExt(); // 메뉴얼 포함수 초기화
-    document.querySelector('.negative_manual').addEventListener('keyup', () => {
+    document.querySelector('.negative-manual').addEventListener('keyup', () => {
         negativeManualNumberExt();
     });
-    document.querySelector('.include_manual').addEventListener('keyup', () => {
+    document.querySelector('.include-manual').addEventListener('keyup', () => {
         includeManualNumberExt();
     });
-    document.querySelector('.extraction_btn').addEventListener('click', () => {
+    document.querySelector('.extraction-btn').addEventListener('click', () => {
         lottoList = [];
         lottoExt();
     });
@@ -101,8 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let drwNo = document.querySelector('.drwNo').value.trim();
         drwNo === '' ? alert('확인 할 회차번호를 입력해 주세요.') : getAPILottoNumber(drwNo);
     });
-    const toggleButton = document.querySelector('.toggle_button');
-    const toggleOption = document.querySelector('.toggle_option');
+    const toggleButton = document.querySelector('.toggle-button');
+    const toggleOption = document.querySelector('.toggle-option');
     toggleButton.addEventListener('click', () => {
         toggleOption.getAttribute('class').indexOf('show') > -1
             ? (toggleOption.classList.remove('show'),
@@ -118,8 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
     resets.forEach(data =>
         data.addEventListener('click', () => {
             let inputName = data.getAttribute('data-input-name');
-            inputName === 'include_manual' ? (includeManualNumber = []) : null;
-            inputName === 'negative_manual' ? (negativeManualNumber = []) : null;
+            inputName === 'include-manual' ? (includeManualNumber = []) : null;
+            inputName === 'negative-manual' ? (negativeManualNumber = []) : null;
             document.querySelector('.' + inputName).value = '';
         })
     );
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     autoNegative.addEventListener('click', () => {
         let lastWinNumber = lottoArr[0];
         let recomNegativeNumber = recomNegativeNumberType1(lastWinNumber);
-        document.querySelector('.negative_manual').value = recomNegativeNumber.toString();
+        document.querySelector('.negative-manual').value = recomNegativeNumber.toString();
         negativeManualNumberExt();
     });
 });
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 const negativeManualNumberExt = () => {
     negativeManualNumber = [];
-    let tnn = document.querySelector('.negative_manual').value.trim();
+    let tnn = document.querySelector('.negative-manual').value.trim();
     !isCommaNumber(tnn) ? negativeManualRollback() : null;
     if (tnn !== '') {
         let nn = tnn.split(',');
@@ -152,7 +152,7 @@ const negativeManualNumberExt = () => {
  */
 const includeManualNumberExt = () => {
     includeManualNumber = [];
-    let tnn = document.querySelector('.include_manual').value.trim();
+    let tnn = document.querySelector('.include-manual').value.trim();
     !isCommaNumber(tnn) ? includeManualRollback() : null;
     if (tnn !== '') {
         let nn = tnn.split(',');
@@ -162,17 +162,17 @@ const includeManualNumberExt = () => {
     }
 };
 const negativeManualRollback = () => {
-    return (document.querySelector('.negative_manual').value = document.querySelector('.negative_manual').value.slice(0, -1));
+    return (document.querySelector('.negative-manual').value = document.querySelector('.negative-manual').value.slice(0, -1));
 };
 const includeManualRollback = () => {
-    return (document.querySelector('.include_manual').value = document.querySelector('.include_manual').value.slice(0, -1));
+    return (document.querySelector('.include-manual').value = document.querySelector('.include-manual').value.slice(0, -1));
 };
 /**
  * 로또번호 추출
  */
 const lottoExt = () => {
-    let cnt = parseInt(document.querySelector('.extraction_cnt').value);
-    let include_mode = document.querySelector('.include_manual_area > select').value.split("_");
+    let cnt = parseInt(document.querySelector('.extraction-cnt').value);
+    let include_mode = document.querySelector('.include-manual-area > select').value.split("_");
     for (z = 0; z < cnt; z++) {
         let lotto = [];
         let incLotto = [];
@@ -248,7 +248,7 @@ const lottoExt = () => {
         '<li data-bs-toggle="modal" data-bs-target="#numberInfoModal" data-type="sos5"><i class="bi bi-circle-fill sos5"></i> 5의 배수</li>';
     lottoStr += '</ul>';
     lottoStr += '</div>';
-    document.querySelector('.extraction_area').innerHTML = lottoStr;
+    document.querySelector('.extraction-area').innerHTML = lottoStr;
 };
 /**
  * 고정수/랜덤 뽑기 함수화
@@ -399,7 +399,7 @@ const drawTextFile = (count = 10) => {
             str += '</tr>';
         }
     });
-    const extractionBody = document.querySelectorAll('.before_number_area tbody')[0];
+    const extractionBody = document.querySelectorAll('.before-number-area tbody')[0];
     extractionBody.innerHTML = str;
 };
 /**
