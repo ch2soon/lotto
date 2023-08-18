@@ -139,7 +139,7 @@ const negativeManualNumberExt = () => {
     let tnn = document.querySelector('.negative-manual').value.trim();
     !isCommaNumber(tnn) ? negativeManualRollback() : null;
     if (tnn !== '') {
-        let nn = tnn.split(',');
+        let nn = setDeduplication(tnn.split(','));
         nn.length > 20
             ? (alert('제외수는 20건까지 등록할 수 있습니다.'), negativeManualRollback())
             : nn.forEach(data => {
@@ -155,7 +155,7 @@ const includeManualNumberExt = () => {
     let tnn = document.querySelector('.include-manual').value.trim();
     !isCommaNumber(tnn) ? includeManualRollback() : null;
     if (tnn !== '') {
-        let nn = tnn.split(',');
+        let nn = setDeduplication(tnn.split(','));
         nn.forEach(data => {
             data.trim() !== '' && parseInt(data) <= 45 ? includeManualNumber.push(parseInt(data)) : null;
         });
@@ -178,7 +178,7 @@ const lottoExt = () => {
         let incLotto = [];
         if(include_mode[0] === "or") {
             let extr_cnt = 0;
-            typeof include_mode[1] === "undefined" || includeManualNumber.length <= parseInt(include_mode[1])
+            typeof include_mode[1] === "undefined" || includeManualNumber.length < parseInt(include_mode[1])
                 ? extr_cnt = (Math.floor(Math.random() * includeManualNumber.length)) + 1
                 : extr_cnt = parseInt(include_mode[1]);
             while (lotto.length < extr_cnt) {

@@ -130,6 +130,15 @@ Number.prototype.zf = function (len) {
     return this.toString().zf(len);
 };
 /**
+ * 배열 중복제거
+ * @param {array} arrData 
+ * @returns 
+ */
+const setDeduplication = (arrData) => {
+    let setArr = arrData.reduce((ac, v) => ac.includes(v) ? ac : [...ac, v], []);
+    return setArr;
+};
+/**
  * 로컬 파일 읽어오기
  * getLottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
  * @param {파일경로} file
