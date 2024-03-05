@@ -140,7 +140,7 @@ const setDeduplication = (arrData) => {
 };
 /**
  * 로컬 파일 읽어오기
- * getLottoArr 배열에 txt파일내용 치환(txt형식 - no1|no2|no3|no4|no5|no6|추첨일|보너스no|회차)
+ * getLottoArr 배열에 txt파일내용 치환(txt형식 - 회차|no1,no2,no3,no4,no5,no6|보너스no|추첨일)
  * @param {파일경로} file
  * @param {출력할 리스트 수} count
  * @returns array
@@ -157,16 +157,17 @@ const readTextFile = file => {
                 preantArr.forEach(prtData => {
                     let childArr = prtData.split('|');
                     if (childArr[0].trim() !== '') {
+                        let noArr = childArr[1].split(',');
                         let lottoObj = {
-                            no1: childArr[0],
-                            no2: childArr[1],
-                            no3: childArr[2],
-                            no4: childArr[3],
-                            no5: childArr[4],
-                            no6: childArr[5],
-                            date: childArr[6],
-                            bonusNo: childArr[7],
-                            round: childArr[8].replace('\r', '')
+                            round: childArr[0],
+                            no1: noArr[0],
+                            no2: noArr[1],
+                            no3: noArr[2],
+                            no4: noArr[3],
+                            no5: noArr[4],
+                            no6: noArr[5],
+                            bonusNo: childArr[2],
+                            date: childArr[3].replace('\r', '')
                         };
                         getLottoArr.push(lottoObj);
                     }
