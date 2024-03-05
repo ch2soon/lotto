@@ -71,16 +71,11 @@ const month6AgoDate = () => {
 }
 /**
  * Example!!
- * 2011년 09월 11일 오후 03시 45분 42초
- * console.log(new Date().format("yyyy년 MM월 dd일 a/p hh시 mm분 ss초"));
- * 2011-09-11
- * console.log(new Date().format("yyyy-MM-dd"));
- * '11 09.11
- * console.log(new Date().format("'yy MM.dd"));
- * 2011-09-11 일요일
- * console.log(new Date().format("yyyy-MM-dd E"));
- * 현재년도 : 2011
- * console.log("현재년도 : " + new Date().format("yyyy"));
+ * console.log(new Date().format("yyyy년 MM월 dd일 a/p hh시 mm분 ss초")); ==> 2011년 09월 11일 오후 03시 45분 42초
+ * console.log(new Date().format("yyyy-MM-dd")); ==> 2011-09-11
+ * console.log(new Date().format("'yy MM.dd")); ==> '11 09.11
+ * console.log(new Date().format("yyyy-MM-dd E")); ==> 2011-09-11 일요일
+ * console.log("현재년도 : " + new Date().format("yyyy")); ==> 현재년도 : 2011
  * @param {date.format} f
  * @returns date
  */
