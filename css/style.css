@@ -70,8 +70,9 @@ hr { margin:0.2rem 0; }
 .abs-hint { text-align:right; margin-bottom:20px; }
 .abs-hint > p { color:#288dd5; font-weight:300; }
 
+#getApiModal th, #getApiModal td { text-align:center; }
 #getApiModal .drwNo { display:inline-block; width:80px; padding:0.275rem 0.75rem; margin:0 5px 0 10px; }
-#getApiModal button { margin-bottom: 5px; }
+#getApiModal .getNumber { margin-bottom: 5px; }
 
 #numberInfoModal .modal-body { margin:10px; }
 #numberInfoModal .modal-body > div > div:last-child { margin-top:0; }

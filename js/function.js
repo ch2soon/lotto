@@ -194,27 +194,20 @@ const getAPILottoNumber = drwNo => {
             .then(data => {
                 if (data.returnValue == 'success') {
                     let str = '';
+                    let drwtNoStr = data.drwtNo1 + ',' + data.drwtNo2 + ',' + data.drwtNo3 + ',' + data.drwtNo4 + ',' + data.drwtNo5 + ',' + data.drwtNo6;
+                    let drwtNoValue = data.drwNo + '|' + drwtNoStr + '|' + data.bnusNo + '|' + data.drwNoDate;
                     str += '<tr>';
                     str += '<td>' + data.drwNo + '</td>';
                     str += '<td>';
-                    str +=
-                        data.drwtNo1 +
-                        ',' +
-                        data.drwtNo2 +
-                        ',' +
-                        data.drwtNo3 +
-                        ',' +
-                        data.drwtNo4 +
-                        ',' +
-                        data.drwtNo5 +
-                        ',' +
-                        data.drwtNo6;
+                    str += drwtNoStr;
                     str += '</td>';
                     str += '<td>' + data.bnusNo + '</td>';
                     str += '<td>' + data.drwNoDate + '</td>';
                     str += '</tr>';
                     const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
                     modalBody.innerHTML = str;
+                    const drwtNoInput = getApiModal.querySelectorAll('.drwtNoValue')[0];
+                    drwtNoInput.value = drwtNoValue;
                 } else {
                     alert('정상적인 회차번호가 아닙니다.\n다시 입력해 주세요.');
                     document.querySelector('.drwNo').value = '';

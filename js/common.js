@@ -36,7 +36,18 @@ document.addEventListener('DOMContentLoaded', () => {
         keyboard: false,
         focus: false
     });
+    document.querySelector('.getDrwtNoData').addEventListener('click', () => {
+        let exDrwtNo = getApiModal.querySelectorAll('.drwtNoValue')[0].value;
+        exDrwtNo.trim() === ""
+            ? alert('당첨번호 조회 후 복사해 주세요.')
+            : (
+                window.navigator.clipboard.writeText(exDrwtNo).then(() => {
+                    alert("복사 되었습니다.");
+                })
+            )
+    });
     document.querySelector('.getAPILottoNumber').addEventListener('click', () => {
+        getApiModal.querySelectorAll('.drwtNoValue')[0].value = '';
         const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
         let input = prompt('비밀번호', '비밀번호를 입력해주세요!');
         let flag = true;
