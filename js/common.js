@@ -9,6 +9,21 @@ let negativeNumber = [];
 let negativeManualNumber = [];
 let includeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
+
+    document.querySelector('.convTypeSet-btn').addEventListener('click', () => {
+        const convJsonletter = JSON.parse(document.querySelector('.convJsonLetter').value);
+        let setLottoText = '';
+        // 1132|6,7,19,28,34,41|5|2024-08-10
+        setLottoText += convJsonletter.drwNo + '|';
+        setLottoText += convJsonletter.drwtNo1 + ',' + convJsonletter.drwtNo2 + ',' + convJsonletter.drwtNo3 + ',' + convJsonletter.drwtNo4 + ',' + convJsonletter.drwtNo5 + ',' + convJsonletter.drwtNo6 + '|';
+        setLottoText += convJsonletter.bnusNo + '|';
+        setLottoText += convJsonletter.drwNoDate;
+        console.log(setLottoText);
+        document.querySelector('.convLetterArea').textContent = setLottoText;
+    });
+
+
+
     drawNoteTemplateFile();
     drawTextFile();
     draw26WeekNumber();
