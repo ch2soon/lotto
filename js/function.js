@@ -180,7 +180,7 @@ const readTextFile = file => {
  */
 const getAPILottoNumber = drwNo => {
     try {
-        const url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=' + drwNo;
+        const url = 'https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do?srchLtEpsd=' + drwNo;
         const headers = new Headers({
             // 'access-control-allow-origin': '*'
             /*"Content-Type": "application/json"*/
@@ -192,17 +192,59 @@ const getAPILottoNumber = drwNo => {
                 throw new Error('Network response was not ok.');
             })
             .then(data => {
-                if (data.returnValue == 'success') {
+/*
+{"resultCode":null,"resultMessage":null,"data":{
+        "list":[
+            {
+                "winType0":0
+                ,"winType1":5
+                ,"winType2":20
+                ,"winType3":3
+                ,"gmSqNo":5133
+                ,"ltEpsd":1194
+                ,"tm1WnNo":3
+                ,"tm2WnNo":13
+                ,"tm3WnNo":15
+                ,"tm4WnNo":24
+                ,"tm5WnNo":33
+                ,"tm6WnNo":37
+                ,"bnsWnNo":2
+                ,"ltRflYmd":"20251018"
+                ,"rnk1WnNope":28
+                ,"rnk1WnAmt":985155349
+                ,"rnk1SumWnAmt":27584349772
+                ,"rnk2WnNope":99
+                ,"rnk2WnAmt":46438300
+                ,"rnk2SumWnAmt":4597391700
+                ,"rnk3WnNope":5442
+                ,"rnk3WnAmt":844799
+                ,"rnk3SumWnAmt":4597396158
+                ,"rnk4WnNope":186820
+                ,"rnk4WnAmt":50000
+                ,"rnk4SumWnAmt":9341000000
+                ,"rnk5WnNope":2884544
+                ,"rnk5WnAmt":5000
+                ,"rnk5SumWnAmt":14422720000
+                ,"sumWnNope":3076933
+                ,"rlvtEpsdSumNtslAmt":60542853000
+                ,"wholEpsdSumNtslAmt":121085706000
+                ,"excelRnk":"1등"
+            }
+        ]
+    }
+}
+*/
+                if (data.data.list.length > 0) {
                     let str = '';
-                    let drwtNoStr = data.drwtNo1 + ',' + data.drwtNo2 + ',' + data.drwtNo3 + ',' + data.drwtNo4 + ',' + data.drwtNo5 + ',' + data.drwtNo6;
-                    let drwtNoValue = data.drwNo + '|' + drwtNoStr + '|' + data.bnusNo + '|' + data.drwNoDate;
+                    let drwtNoStr = data.data.list[0].tm1WnNo + ',' + data.data.list[0].tm2WnNo + ',' + data.data.list[0].tm3WnNo + ',' + data.data.list[0].tm4WnNo + ',' + data.data.list[0].tm5WnNo + ',' + data.data.list[0].tm6WnNo;
+                    let drwtNoValue = data.data.list[0].ltEpsd + '|' + drwtNoStr + '|' + data.data.list[0].bnsWnNo + '|' + format8ByYmd(data.data.list[0].ltRflYmd);
                     str += '<tr>';
-                    str += '<td>' + data.drwNo + '</td>';
+                    str += '<td>' + data.data.list[0].ltEpsd + '</td>';
                     str += '<td>';
                     str += drwtNoStr;
                     str += '</td>';
-                    str += '<td>' + data.bnusNo + '</td>';
-                    str += '<td>' + data.drwNoDate + '</td>';
+                    str += '<td>' + data.data.list[0].bnsWnNo + '</td>';
+                    str += '<td>' + format8ByYmd(data.data.list[0].ltRflYmd) + '</td>';
                     str += '</tr>';
                     const modalBody = getApiModal.querySelectorAll('.modal-body tbody')[0];
                     modalBody.innerHTML = str;
@@ -356,4 +398,12 @@ const calculate = num => {
         num >= 10 * i ? (result = ((num % 10) * i - (num % i)) / i) : 0;
         return result;
     }
+};
+/**
+ * 8자리 숫자 YYmmdd형태로 변환
+ * @param {int} ymd
+ * @returns date
+ */
+const format8ByYmd = ymd => {
+	return ymd.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
 };
