@@ -9,7 +9,6 @@ let negativeNumber = [];
 let negativeManualNumber = [];
 let includeManualNumber = [];
 document.addEventListener('DOMContentLoaded', () => {
-
     document.querySelector('.convTypeSet-btn').addEventListener('click', () => {
         const convJsonletter = JSON.parse(document.querySelector('.convJsonLetter').value);
         let setLottoText = '';
@@ -21,9 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(setLottoText);
         document.querySelector('.convLetterArea').textContent = setLottoText;
     });
-
-
-
     drawNoteTemplateFile();
     drawTextFile();
     draw26WeekNumber();

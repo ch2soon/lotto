@@ -192,48 +192,6 @@ const getAPILottoNumber = drwNo => {
                 throw new Error('Network response was not ok.');
             })
             .then(data => {
-/*
-{"resultCode":null,"resultMessage":null,"data":{
-        "list":[
-            {
-                "winType0":0
-                ,"winType1":5
-                ,"winType2":20
-                ,"winType3":3
-                ,"gmSqNo":5133
-                ,"ltEpsd":1194
-                ,"tm1WnNo":3
-                ,"tm2WnNo":13
-                ,"tm3WnNo":15
-                ,"tm4WnNo":24
-                ,"tm5WnNo":33
-                ,"tm6WnNo":37
-                ,"bnsWnNo":2
-                ,"ltRflYmd":"20251018"
-                ,"rnk1WnNope":28
-                ,"rnk1WnAmt":985155349
-                ,"rnk1SumWnAmt":27584349772
-                ,"rnk2WnNope":99
-                ,"rnk2WnAmt":46438300
-                ,"rnk2SumWnAmt":4597391700
-                ,"rnk3WnNope":5442
-                ,"rnk3WnAmt":844799
-                ,"rnk3SumWnAmt":4597396158
-                ,"rnk4WnNope":186820
-                ,"rnk4WnAmt":50000
-                ,"rnk4SumWnAmt":9341000000
-                ,"rnk5WnNope":2884544
-                ,"rnk5WnAmt":5000
-                ,"rnk5SumWnAmt":14422720000
-                ,"sumWnNope":3076933
-                ,"rlvtEpsdSumNtslAmt":60542853000
-                ,"wholEpsdSumNtslAmt":121085706000
-                ,"excelRnk":"1등"
-            }
-        ]
-    }
-}
-*/
                 if (data.data.list.length > 0) {
                     let str = '';
                     let drwtNoStr = data.data.list[0].tm1WnNo + ',' + data.data.list[0].tm2WnNo + ',' + data.data.list[0].tm3WnNo + ',' + data.data.list[0].tm4WnNo + ',' + data.data.list[0].tm5WnNo + ',' + data.data.list[0].tm6WnNo;
